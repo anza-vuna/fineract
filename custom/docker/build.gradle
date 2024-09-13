@@ -34,7 +34,7 @@ jib {
     }
 
     to {
-        image = 'fineract-custom'
+        image = 'almbolonzi/fineract-custom'
         tags = [
             "${project.version}",
             'latest'
@@ -51,7 +51,7 @@ jib {
             '-Djava.security.egd=file:/dev/./urandom'
         ]
         ports = ['8080/tcp', '8443/tcp']
-        labels = [maintainer: 'Aleksandar Vidakovic <aleks@apache.org>']
+        labels = [maintainer: 'Alex Mbolonzi <almbolonzi@gmail.com>']
         user = 'nobody:nogroup'
     }
 
@@ -66,7 +66,7 @@ jib {
                 file("${rootDir}/custom/${companyDir.name}").eachDir { categoryDir ->
                     if('build' != categoryDir.name) {
                         file("${rootDir}/custom/${companyDir.name}/${categoryDir.name}").eachDir { moduleDir ->
-                            if('build' != moduleDir.name) {
+                            if(!moduleDir.name.startsWith('.') && 'build' != moduleDir.name) {
                                 implementation project(":custom:${companyDir.name}:${categoryDir.name}:${moduleDir.name}")
                             }
                         }

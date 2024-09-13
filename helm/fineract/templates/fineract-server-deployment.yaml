@@ -1,0 +1,250 @@
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements. See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership. The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License. You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
+# OF ANY KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+
+{{- if .Values.fineract.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: fineract-server
+  name: fineract-server
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  ports:
+    - name: LB-SERVER
+      protocol: TCP
+      port: {{ .Values.fineract.spec.template.spec.containers.env.CONTAINER_PORT }}
+      targetPort: {{ .Values.fineract.spec.template.spec.containers.env.FINERACT_SERVER_PORT }}
+  selector:
+    app: fineract-server
+    tier: backend
+  type: LoadBalancer
+#  loadBalancerIP: 34.45.178.100
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fineract-server
+  labels:
+    app: fineract-server
+spec:
+  selector:
+    matchLabels:
+      app: fineract-server
+      tier: backend
+  strategy:
+    type: Recreate
+  template: 
+    metadata:
+      labels:
+        app: fineract-server
+        tier: backend
+    spec:
+      serviceAccountName: cloudsql-ksa
+      containers: 
+      - name: fineract-server
+        image: "{{ .Values.fineract.image }}"
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "{{ .Values.fineract.resources.limits.cpu }}"
+            memory: "{{ .Values.fineract.resources.limits.memory }}"
+          requests:
+            cpu: "{{ .Values.fineract.resources.requests.cpu }}"
+            memory: "{{ .Values.fineract.resources.requests.memory }}"
+        # livenessProbe:
+        #   httpGet:
+        #     path: /healthz
+        #     port: 8080
+        #   initialDelaySeconds: 720
+        #   periodSeconds: 1
+        # readinessProbe:
+        #   httpGet:
+        #     path: /healthz
+        #     port: 8080
+        #   initialDelaySeconds: 360
+        #   periodSeconds: 1
+        env:
+          - name: FINERACT_SERVER_PORT
+            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_SERVER_PORT }}"
+          - name: FINERACT_NODE_ID
+            value: '1'
+          - name: FINERACT_HIKARI_DRIVER_CLASS_NAME
+            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_HIKARI_DRIVER_CLASS_NAME }}"
+          - name: FINERACT_HIKARI_JDBC_URL
+            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_HIKARI_JDBC_URL }}"
+          - name: FINERACT_HIKARI_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: fineract-tenants-db-secret
+                key: username
+          - name: FINERACT_HIKARI_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: fineract-tenants-db-secret
+                key: password
+          - name: FINERACT_DEFAULT_TENANTDB_HOSTNAME
+            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_HOSTNAME }}"
+          - name: FINERACT_DEFAULT_TENANTDB_PORT
+            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_PORT }}"
+          - name: FINERACT_DEFAULT_TENANTDB_IDENTIFIER
+            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_IDENTIFIER }}"
+          - name: FINERACT_DEFAULT_TENANTDB_NAME
+            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_NAME }}"
+          - name: FINERACT_DEFAULT_TENANTDB_UID
+            valueFrom:
+              secretKeyRef:
+                name: fineract-tenants-db-secret
+                key: username
+          - name: FINERACT_DEFAULT_TENANTDB_PWD
+            valueFrom:
+              secretKeyRef:
+                name: fineract-tenants-db-secret
+                key: password
+          - name: FINERACT_DEFAULT_TENANTDB_CONN_PARAMS
+            value: ''
+          - name: "FINERACT_SECURITY_BASICAUTH_ENABLED"
+            value: 'true'
+          - name: "FINERACT_SECURITY_OAUTH_ENABLED"
+            value: 'false'
+        ports:
+          - containerPort: {{ .Values.fineract.spec.template.spec.containers.env.FINERACT_SERVER_PORT }}
+            name: fineract-server
+        lifecycle:
+          preStop:
+            exec:
+              command: ['sh', '-c', '{{ .Values.fineract.preStopScript}}']
+      - name: cloud-sql-proxy
+        # It is recommended to use the latest version of the Cloud SQL Auth Proxy
+        # Make sure to update on a regular schedule!
+        image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.11.4
+        args:
+          # If connecting from a VPC-native GKE cluster, you can use the
+          # following flag to have the proxy connect over private IP
+          # - "--private-ip"
+
+          # Enable structured logging with LogEntry format:
+          - "--structured-logs"
+
+          # Replace DB_PORT with the port the proxy should listen on
+          - "--port=3306"
+          - "nodal-linker-425007-t9:us-central1:kemetx-instance-d06d1de9"
+        
+        securityContext:
+          # The default Cloud SQL Auth Proxy image runs as the
+          # "nonroot" user and group (uid: 65532) by default.
+          runAsNonRoot: true
+        # You should use resource requests/limits as a best practice to prevent
+        # pods from consuming too many resources and affecting the execution of
+        # other pods. You should adjust the following values based on what your
+        # application needs. For details, see
+        # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+        resources:
+          requests:
+            # The proxy's memory use scales linearly with the number of active
+            # connections. Fewer open connections will use less memory. Adjust
+            # this value based on your application's requirements.
+            memory: "64Mi"
+            # The proxy's CPU use scales linearly with the amount of IO between
+            # the database and the application. Adjust this value based on your
+            # application's requirements.
+            cpu:    "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        volumeMounts:
+          - name: cloudsql-instance-credentials
+            mountPath: /secrets/cloudsql
+            readOnly: true
+          - name: mysql-initdb
+            mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: fineract-tenants-db-secret
+        - name: mysql-initdb
+          configMap:
+            name: mysql-preload-data-config
+# [END cloud_sql_proxy_k8s_container]
+
+---
+{{- if .Values.fineract.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fineract-ingress
+  annotations:
+{{- if .Values.fineract.ingress.annotations }}
+{{ toYaml .Values.fineract.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+  rules:
+    - host: "{{ .Values.fineract.ingress.hostname }}"
+      http:
+        paths:
+          - path: "{{ .Values.fineract.ingress.path }}"
+            pathType: Prefix
+            backend:
+              service:
+                name: fineract-server
+                port: 
+                  number: {{ .Values.fineract.spec.template.spec.containers.env.CONTAINER_PORT }}
+{{- end }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: fineract-tenants-db-secret
+type: Opaque
+data:
+  username: "YWRtaW5fdXNlcg=="
+  password: "azNtM1R4RjFOM3JhYzc="
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-preload-data-config
+  labels:
+    name: mysql-data-store
+    app: mysql-gke-deployment
+  #namespace: development
+data:
+  init.sql: |
+    CREATE DATABASE IF NOT EXISTS `kemetx_tenants`;
+    CREATE DATABASE IF NOT EXISTS `kemetx_default`;
+    GRANT ALL ON *.* TO 'root'@'%';
+    GRANT ALL PRIVILEGES ON `fineract_tenants`.* TO 'mifos';
+    GRANT ALL PRIVILEGES ON `fineract_default`.* TO 'mifos';
+# ---
+# apiVersion: networking.gke.io/v1
+# kind: ManagedCertificate
+# metadata:
+#   name: kemetstax-ssl-cert-d06d1de9
+# #  namespace: paymenthub-back-end
+# spec:
+#   domains:
+#     - api.kemetstax.org
+#     - dev.kemetstax.org
+#     - kemetstax.org
+#     - kemetx.kemetstax.org
+#     - qa.kemetstax.org
+#     - test.kemetstax.org
+#     - web.kemetstax.org
+
+{{- end }}

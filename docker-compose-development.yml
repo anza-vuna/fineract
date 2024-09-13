@@ -58,8 +58,8 @@ services:
 
   db:
     extends:
-      file: ./config/docker/compose/mariadb.yml
-      service: mariadb
+      file: ./config/docker/compose/mysql.yml
+      service: mysqldb
     depends_on:
       - loki
     logging: *default-logging
@@ -71,6 +71,7 @@ services:
       service: fineract
     ports:
       - "8443:8443"
+	  - "8080:8080"
       - "5000:5000"
     depends_on:
       db:
@@ -81,7 +82,7 @@ services:
       - ./config/docker/env/aws.env
       - ./config/docker/env/fineract.env
       - ./config/docker/env/fineract-common.env
-      - ./config/docker/env/fineract-mariadb.env
+      - ./config/docker/env/fineract-mysqldb.env
       - ./config/docker/env/tracing.env
       - ./config/docker/env/oltp.env
       - ./config/docker/env/prometheus.env

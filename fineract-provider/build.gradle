@@ -153,7 +153,8 @@ configurations {
 dependencies {
     driver 'org.mariadb.jdbc:mariadb-java-client'
     driver 'org.postgresql:postgresql'
-    driver 'mysql:mysql-connector-java:8.0.33'
+    driver 'com.mysql:mysql-connector-j:9.0.0'
+    driver 'com.google.cloud.sql:mysql-socket-factory-connector-j-8:1.14.1'
 }
 
 URLClassLoader loader = GroovyObject.class.classLoader
@@ -225,6 +226,9 @@ bootRun {
     dependencies {
         implementation 'org.mariadb.jdbc:mariadb-java-client'
         implementation 'org.postgresql:postgresql'
+        implementation 'com.mysql:mysql-connector-j:9.0.0'
+        implementation 'com.google.cloud.sql:mysql-socket-factory-connector-j-8:1.14.1'
+        
     }
 }
 
@@ -252,10 +256,20 @@ jib {
         }
     }
 
+	// Determine the version tag from Git repository tag
+    def versionTag = 'git describe --tags --abbrev=0'.execute().text.trim()
+
+    if (versionTag.startsWith('v')) {
+    //Remove 'v' prefix from version tag if present
+        versionTag = versionTag.substring(1)
+    }
+    
     to {
-        image = 'fineract'
+        image = 'almbolonzi/ekesha-fineract'
         tags = [
             "${project.version}",
+            "${versionTag}",
+            "${System.getenv('GITHUB_SHA')}".toString(),
             'latest'
         ]
     }
@@ -271,8 +285,13 @@ jib {
             '-Djava.security.egd=file:/dev/./urandom'
         ]
         ports = ['8080/tcp', '8443/tcp']
-        labels = [maintainer: 'Aleksandar Vidakovic <aleks@apache.org>']
+        labels = [maintainer: 'Alex Mbolonzi <almbolonzi@gmail.com']
         user = 'nobody:nogroup'
+        environment = [
+           'GITHUB_SHA' : "${System.getenv('GITHUB_SHA')}".toString(),
+           'GITHUB_REF' : "${System.getenv('GITHUB_REF')}".toString()
+//         'GAR_LOCATION' : "${System.getenv('GAR_LOCATION')}".toString()
+        ]
     }
 
     allowInsecureRegistries = true
@@ -280,6 +299,8 @@ jib {
     dependencies {
         implementation 'org.mariadb.jdbc:mariadb-java-client'
         implementation 'org.postgresql:postgresql'
+        implementation 'com.mysql:mysql-connector-j:9.0.0'
+        implementation 'com.google.cloud.sql:mysql-socket-factory-connector-j-8:1.14.1'
     }
 
     pluginExtensions {
@@ -295,6 +316,29 @@ jib {
         }
     }
 }
+
+task dockerPush {
+    doLast {
+        // Determine the version tag from Git repository tag
+        def versionTag = 'git describe --tags --abbrev=0'.execute().text.trim()
+
+        if (versionTag.startsWith('v')) {
+            // Remove 'v' prefix from version tag if present
+            versionTag = versionTag.substring(1)
+        }
+
+        // Push the versioned tag
+        exec {
+            commandLine 'docker', 'push', "almbolonzi/ekesha-fineract:${versionTag}"
+        }
+
+        // Push as the latest tag
+        exec {
+            commandLine 'docker', 'push', "almbolonzi/ekesha-fineract:latest"
+        }
+    }
+}
+
 
 task migrateDatabase {
     doFirst {
