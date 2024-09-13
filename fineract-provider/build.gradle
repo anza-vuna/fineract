@@ -268,7 +268,7 @@ jib {
         image = 'almbolonzi/ekesha-fineract'
         tags = [
             "${project.version}",
-            //"${versionTag}",
+            "${versionTag}",
             "${System.getenv('GITHUB_SHA')}".toString(),
             'latest'
         ]
@@ -329,19 +329,13 @@ task dockerPush {
 
         // Push the versioned tag
         exec {
-            commandLine 'docker', 'push', "almbolonzi/ekesha-fineract:${System.getenv('GITHUB_SHA')}.toString()"
+            commandLine 'docker', 'push', "almbolonzi/ekesha-fineract:${versionTag}"
         }
 
         // Push as the latest tag
         exec {
             commandLine 'docker', 'push', "almbolonzi/ekesha-fineract:latest"
         }
-        
-        environment = [
-           'GITHUB_SHA' : "${System.getenv('GITHUB_SHA')}".toString(),
-           'GITHUB_REF' : "${System.getenv('GITHUB_REF')}".toString()
-//         'GAR_LOCATION' : "${System.getenv('GAR_LOCATION')}".toString()
-        ]
     }
 }
 
