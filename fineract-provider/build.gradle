@@ -268,7 +268,7 @@ jib {
         image = 'almbolonzi/ekesha-fineract'
         tags = [
             "${project.version}",
-            "${versionTag}",
+            //"${versionTag}",
             "${System.getenv('GITHUB_SHA')}".toString(),
             'latest'
         ]
