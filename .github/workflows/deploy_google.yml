@@ -45,7 +45,7 @@ env:
   DEPLOYMENT_NAME: 'Ekesha-dev'
   REPOSITORY: 'mali-fineract-4bdf2076'
   IMAGE: 'ekesha-fineract'
-  WORKLOAD_IDENTITY_PROVIDER: 'projects/mali-434814/locations/global/workloadIdentityPools/ekesha-dev-pool/providers/ekesha-provider' # TODO: update to your workload identity provider
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/355572689676/locations/global/workloadIdentityPools/ekesha-dev-pool/providers/ekesha-provider' # TODO: update to your workload identity provider
   NAMESPACE: 'paymenthub-back-end-4bdf2076'
   
 jobs:
