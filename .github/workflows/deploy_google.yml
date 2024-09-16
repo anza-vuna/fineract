@@ -41,7 +41,7 @@ env:
   PROJECT_ID: ${{ secrets.EKESHA_GKE_PROJECT }} 
   GAR_LOCATION: 'us-central1'
   GKE_CLUSTER: 'fineract-cluster-4bdf2076' 
-  #GKE_ZONE: 'us-central1-c' 
+  GKE_ZONE: 'us-central1-c' 
   DEPLOYMENT_NAME: 'Ekesha-dev'
   REPOSITORY: 'mali-fineract-4bdf2076'
   IMAGE: 'ekesha-fineract'
@@ -93,7 +93,7 @@ jobs:
         uses: 'google-github-actions/get-gke-credentials@6051de21ad50fbb1767bc93c11357a49082ad116' # google-github-actions/get-gke-credentials@v2
         with:
           cluster_name: '${{ env.GKE_CLUSTER }}'
-          location: '${{ env.GKE_LOCATION }}'
+          location: '${{ env.GKE_ZONE }}'
 
       # Build the Docker image
       - name: Build the image
