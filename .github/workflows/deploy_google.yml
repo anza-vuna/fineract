@@ -40,13 +40,13 @@ on:
 env:
   PROJECT_ID: ${{ secrets.EKESHA_GKE_PROJECT }} 
   GAR_LOCATION: 'us-central1'
-  GKE_CLUSTER: 'fineract-cluster-ce3137c9' 
-  GKE_ZONE: 'us-central1-c' 
+  GKE_CLUSTER: 'fineract-cluster-4bdf2076' 
+  #GKE_ZONE: 'us-central1-c' 
   DEPLOYMENT_NAME: 'Ekesha-dev'
-  REPOSITORY: 'mali-fineract-ce3137c9'
+  REPOSITORY: 'mali-fineract-4bdf2076'
   IMAGE: 'ekesha-fineract'
-  WORKLOAD_IDENTITY_PROVIDER: 'https://iam.googleapis.com/projects/355572689676/locations/global/workloadIdentityPools/ekesha-pool-test/providers/ekesha-provider' # TODO: update to your workload identity provider
-  NAMESPACE: 'paymenthub-back-end-ce3137c9'
+  WORKLOAD_IDENTITY_PROVIDER: 'projects/mali-434814/locations/global/workloadIdentityPools/ekesha-dev-pool/providers/ekesha-provider' # TODO: update to your workload identity provider
+  NAMESPACE: 'paymenthub-back-end-4bdf2076'
   
 jobs:
   setup-build-publish-deploy:
@@ -93,7 +93,7 @@ jobs:
         uses: 'google-github-actions/get-gke-credentials@6051de21ad50fbb1767bc93c11357a49082ad116' # google-github-actions/get-gke-credentials@v2
         with:
           cluster_name: '${{ env.GKE_CLUSTER }}'
-          location: '${{ env.GKE_ZONE }}'
+          location: '${{ env.GKE_LOCATION }}'
 
       # Build the Docker image
       - name: Build the image
