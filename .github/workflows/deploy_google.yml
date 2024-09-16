@@ -35,8 +35,7 @@ name: 'Build and Deploy to GKE'
 
 on:
   push:
-    branches:
-      - '"ekesha-dev"'
+    branches: ["ekesha-dev"]
 
 env:
   PROJECT_ID: ${{ secrets.EKESHA_GKE_PROJECT }} 
