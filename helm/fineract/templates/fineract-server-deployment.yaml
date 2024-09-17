@@ -214,7 +214,7 @@ metadata:
 type: Opaque
 data:
   username: "YWRtaW5fdXNlcg=="
-  password: "azNtM1R4RjFOM3JhYzc="
+  password: "RTRrZXNoNA=="
 ---
 apiVersion: v1
 kind: ConfigMap
