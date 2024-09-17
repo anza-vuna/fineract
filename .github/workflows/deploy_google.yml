@@ -99,7 +99,7 @@ jobs:
       - name: Build the image
         run: ./gradlew --no-daemon --console=plain :fineract-provider:clean :fineract-provider:compileJava :fineract-provider:jibDockerBuild -x test -x cucumber
         env:
-          GAR_LOCATION: ${{ env.GAR_LOCATION }}
+          GAR_LOCATION: ${{ env.GKE_ZONE }}
           GITHUB_SHA: ${{ github.sha }}
           GITHUB_REF: ${{ github.ref }}
           PROJECT_ID: ${{ env.PROJECT_ID }}
@@ -109,7 +109,7 @@ jobs:
       # Push the Docker image to Google Artifact Registry
       - name: 'Publish'
         run: |-
-          docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA"
+          docker push "$GKE_ZONE-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA"
           
       # Deploy the Docker image to the GKE cluster
       - name: 'Deploy to GKE'
@@ -136,7 +136,7 @@ jobs:
   
           helm upgrade -f helm/fineract/values.yaml ph-ee-backend helm/fineract/ \
           --install --namespace ${NAMESPACE} \
-          --set fineract.image=${GAR_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE}:${GITHUB_SHA} \
+          --set fineract.image=${GKE_ZONE}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE}:${GITHUB_SHA} \
           --set fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_IDENTIFIER=${FINERACT_DEFAULT_TENANTDB_IDENTIFIER_TEST} \
           --set fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_NAME=${FINERACT_DEFAULT_TENANTDB_NAME_TEST} \
           --set fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_HOSTNAME=${FINERACT_DEFAULT_TENANTDB_HOSTNAME_TEST} \
