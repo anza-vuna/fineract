@@ -71,13 +71,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /actuator/health
-            port: 80
+            port: 8080
           initialDelaySeconds: 720
           periodSeconds: 1
         readinessProbe:
           httpGet:
             path: /actuator/health
-            port: 80
+            port: 8080
           initialDelaySeconds: 360
           periodSeconds: 1
         env:
