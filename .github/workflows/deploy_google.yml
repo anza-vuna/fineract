@@ -119,7 +119,7 @@ jobs:
           export FINERACT_DEFAULT_TENANTDB_NAME_TEST=$(gcloud secrets versions access latest --secret=FINERACT_DEFAULT_TENANTDB_NAME_TEST)
           export FINERACT_HIKARI_PASSWORD_TEST=$(gcloud secrets versions access latest --secret=FINERACT_HIKARI_PASSWORD_TEST)
           export FINERACT_HIKARI_USERNAME_TEST=$(gcloud secrets versions access latest --secret=FINERACT_HIKARI_USERNAME_TEST)
-          export FINERACT_DEFAULT_TENANTDB_HOSTNAME_TEST=$(gcloud secrets versions access 4 --secret=FINERACT_DEFAULT_TENANTDB_HOSTNAME_TEST)
+          export FINERACT_DEFAULT_TENANTDB_HOSTNAME_TEST=$(gcloud secrets versions access latest --secret=FINERACT_DEFAULT_TENANTDB_HOSTNAME_TEST)
         
           # Add Helm repo if needed (adjust to your Helm chart repository)
           helm repo add camunda-platform https://helm.camunda.io
