@@ -240,11 +240,5 @@ data:
 # spec:
 #   domains:
 #     - api.kemetstax.org
-#     - dev.kemetstax.org
-#     - kemetstax.org
-#     - kemetx.kemetstax.org
-#     - qa.kemetstax.org
-#     - test.kemetstax.org
-#     - web.kemetstax.org
-
+    
 {{- end }}
