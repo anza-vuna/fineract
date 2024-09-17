@@ -27,7 +27,7 @@ metadata:
     cloud.google.com/neg: '{"ingress": true}'
 spec:
   ports:
-    - name: LB-SERVER
+    - name: lb-server-port
       protocol: TCP
       port: {{ .Values.fineract.spec.template.spec.containers.env.CONTAINER_PORT }}
       targetPort: {{ .Values.fineract.spec.template.spec.containers.env.FINERACT_SERVER_PORT }}
