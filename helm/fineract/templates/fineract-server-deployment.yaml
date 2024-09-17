@@ -70,13 +70,13 @@ spec:
             memory: "{{ .Values.fineract.resources.requests.memory }}"
         livenessProbe:
           httpGet:
-            path: /healthz
+            path: /actuator/health
             port: 80
           initialDelaySeconds: 720
           periodSeconds: 1
         readinessProbe:
           httpGet:
-            path: /healthz
+            path: /actuator/health
             port: 80
           initialDelaySeconds: 360
           periodSeconds: 1
