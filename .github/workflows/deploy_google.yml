@@ -40,13 +40,13 @@ on:
 env:
   PROJECT_ID: ${{ secrets.EKESHA_GKE_PROJECT }} 
   GAR_LOCATION: 'us-central1'
-  GKE_CLUSTER: 'fineract-cluster-4bdf2076' 
+  GKE_CLUSTER: 'fineract-cluster-dbfb2e8d' 
   GKE_ZONE: 'us-central1-c' 
   DEPLOYMENT_NAME: 'Ekesha-dev'
-  REPOSITORY: 'mali-fineract-4bdf2076'
+  REPOSITORY: 'mali-fineract-dbfb2e8d'
   IMAGE: 'ekesha-fineract'
-  WORKLOAD_IDENTITY_PROVIDER: 'projects/355572689676/locations/global/workloadIdentityPools/ekesha-dev-pool/providers/ekesha-provider' # TODO: update to your workload identity provider
-  NAMESPACE: 'paymenthub-back-end-4bdf2076'
+  WORKLOAD_IDENTITY_PROVIDER: '/projects/355572689676/locations/global/workloadIdentityPools/ekesha-dev-pool2/providers/ekesha-provider' # TODO: update to your workload identity provider
+  NAMESPACE: 'paymenthub-back-end-dbfb2e8d'
   
 jobs:
   setup-build-publish-deploy:
