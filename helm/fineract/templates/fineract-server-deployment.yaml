@@ -144,7 +144,7 @@ spec:
 
           # Replace DB_PORT with the port the proxy should listen on
           - "--port=3306"
-          - "nodal-linker-425007-t9:us-central1:kemetx-instance-d06d1de9"
+          - "mali-434814:us-central1:mali-instance-dbfb2e8d"
         
         securityContext:
           # The default Cloud SQL Auth Proxy image runs as the
