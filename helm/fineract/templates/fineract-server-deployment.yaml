@@ -34,7 +34,7 @@ spec:
   selector:
     app: fineract-server
     tier: backend
-  type: NodePort
+  type: ClusterIP
 #  loadBalancerIP: 34.45.178.100
 ---
 apiVersion: apps/v1
@@ -70,13 +70,13 @@ spec:
             memory: "{{ .Values.fineract.resources.requests.memory }}"
         livenessProbe:
           httpGet:
-            path: /actuator/health/liveness
+            path: /fineract-provider/actuator/health/liveness
             port: 8080
           initialDelaySeconds: 720
           periodSeconds: 1
         readinessProbe:
           httpGet:
-            path: /actuator/health/readiness
+            path: /fineract-provider/actuator/health/readiness
             port: 8080
           initialDelaySeconds: 360
           periodSeconds: 1
