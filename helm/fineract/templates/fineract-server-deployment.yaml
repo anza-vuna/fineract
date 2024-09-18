@@ -232,13 +232,13 @@ data:
     GRANT ALL PRIVILEGES ON `fineract_tenants`.* TO 'mifos';
     GRANT ALL PRIVILEGES ON `fineract_default`.* TO 'mifos';
 ---
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: ekesha-ssl-cert
+#apiVersion: networking.gke.io/v1
+#kind: ManagedCertificate
+#metadata:
+#  name: ekesha-ssl-cert
    #namespace: paymenthub-back-end
-spec:
- domains:
-  - api.vuna.io
+#spec:
+# domains:
+#  - api.vuna.io
     
 {{- end }}
