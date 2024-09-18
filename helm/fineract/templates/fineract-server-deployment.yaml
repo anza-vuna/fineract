@@ -231,14 +231,14 @@ data:
     GRANT ALL ON *.* TO 'root'@'%';
     GRANT ALL PRIVILEGES ON `fineract_tenants`.* TO 'mifos';
     GRANT ALL PRIVILEGES ON `fineract_default`.* TO 'mifos';
-# ---
-# apiVersion: networking.gke.io/v1
-# kind: ManagedCertificate
-# metadata:
-#   name: kemetstax-ssl-cert-d06d1de9
-# #  namespace: paymenthub-back-end
-# spec:
-#   domains:
-#     - api.kemetstax.org
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: ekesha-ssl-cert
+   #namespace: paymenthub-back-end
+spec:
+ domains:
+  - api.vuna.io
     
 {{- end }}
