@@ -27,7 +27,7 @@ metadata:
     cloud.google.com/neg: '{"ingress": true}'
 spec:
   ports:
-    - name: lb-server-port
+    - name: 80-8080
       protocol: TCP
       port: {{ .Values.fineract.spec.template.spec.containers.env.CONTAINER_PORT }}
       targetPort: {{ .Values.fineract.spec.template.spec.containers.env.FINERACT_SERVER_PORT }}
@@ -70,13 +70,13 @@ spec:
             memory: "{{ .Values.fineract.resources.requests.memory }}"
         livenessProbe:
           httpGet:
-            path: /actuator/health
+            path: /fineract-provider/actuator/health/liveness
             port: 8080
           initialDelaySeconds: 720
           periodSeconds: 1
         readinessProbe:
           httpGet:
-            path: /actuator/health
+            path: /fineract-provider/actuator/health/readiness
             port: 8080
           initialDelaySeconds: 360
           periodSeconds: 1
