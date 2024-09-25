@@ -205,6 +205,10 @@ spec:
                 name: fineract-server
                 port: 
                   number: {{ .Values.fineract.spec.template.spec.containers.env.CONTAINER_PORT }}
+tls:
+  - hosts:
+      - "{{ .Values.fineract.ingress.hostname }}"
+    secretName: vuna-tls-secret  # This can be any name; it's not used with managed certificates
 {{- end }}
 ---
 apiVersion: v1
