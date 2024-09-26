@@ -205,10 +205,6 @@ spec:
                 name: fineract-server
                 port: 
                   number: {{ .Values.fineract.spec.template.spec.containers.env.CONTAINER_PORT }}
-tls:
-  - hosts:
-      - "{{ .Values.fineract.ingress.hostname }}"
-    secretName: vuna-tls-secret  # This can be any name; it's not used with managed certificates
 {{- end }}
 ---
 apiVersion: v1
@@ -236,13 +232,13 @@ data:
     GRANT ALL PRIVILEGES ON `fineract_tenants`.* TO 'mifos';
     GRANT ALL PRIVILEGES ON `fineract_default`.* TO 'mifos';
 ---
-#apiVersion: networking.gke.io/v1
-#kind: ManagedCertificate
-#metadata:
-#  name: ekesha-ssl-cert
-   #namespace: paymenthub-back-end
-#spec:
-# domains:
-#  - api.vuna.io
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: fin-managed-ssl-certificate-dbfb2e8d
+#  namespace: paymenthub-back-end
+spec:
+ domains:
+  - api.vuna.io
     
 {{- end }}
