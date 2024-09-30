@@ -71,13 +71,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /fineract-provider/actuator/health/liveness
-            port: 443
+            port: 8080
           initialDelaySeconds: 720
           periodSeconds: 1
         readinessProbe:
           httpGet:
             path: /fineract-provider/actuator/health/readiness
-            port: 443
+            port: 8080
           initialDelaySeconds: 360
           periodSeconds: 1
         env:
