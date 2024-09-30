@@ -36,7 +36,7 @@ fineract:
       # This tells Google Cloud to create an External Load Balancer to realize this Ingress
       kubernetes.io/ingress.class: "gce"
       #nginx.org/redirect-to-https: "true"
-      kubernetes.io/ingress.allow-http: "false"
+#      kubernetes.io/ingress.allow-http: "false"
   resources:
     limits:
       cpu: "2000m"
