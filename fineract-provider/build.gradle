@@ -266,7 +266,8 @@ jib {
     
     to {
         //image = 'almbolonzi/ekesha-fineract'
-	image = "${System.getenv('GAR_LOCATION')}-docker.pkg.dev/${System.getenv('PROJECT_ID')}/${System.getenv('REPOSITORY')}/${System.getenv('IMAGE')}".toString()
+//	image = "${System.getenv('GAR_LOCATION')}-docker.pkg.dev/${System.getenv('PROJECT_ID')}/${System.getenv('REPOSITORY')}/${System.getenv('IMAGE')}".toString()
+        image = "${System.getenv('DOCKER_URL')}/${System.getenv('DOSN')}/${System.getenv('REPOSITORY')}/${System.getenv('IMAGE')}".toString()
         tags = [
             "${project.version}",
             "${versionTag}",
@@ -291,9 +292,9 @@ jib {
         environment = [
            'GITHUB_SHA' : "${System.getenv('GITHUB_SHA')}".toString(),
            'GITHUB_REF' : "${System.getenv('GITHUB_REF')}".toString(),
-           'GAR_LOCATION' : "${System.getenv('GAR_LOCATION')}".toString(),
-	       'PROJECT_ID' : "${System.getenv('PROJECT_ID')}".toString(),
-	       'REPOSITORY' : "${System.getenv('REPOSITORY')}".toString(),
+           'DOCKER_URL' : "${System.getenv('DOCKER_URL')}".toString(),
+	       'DOSN' : "${System.getenv('DOSN')}".toString(),
+//	       'REPOSITORY' : "${System.getenv('REPOSITORY')}".toString(),
 	       'IMAGE' : "${System.getenv('IMAGE')}".toString()
         ]
     }
