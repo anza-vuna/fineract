@@ -7,7 +7,7 @@ on:
 #      - app/**
 #  workflow_dispatch:
 env:
-  IMAGE: 'ekesha-fineract'
+  IMAGE: 'paymenthub-registry'
 
 jobs:
   build:
