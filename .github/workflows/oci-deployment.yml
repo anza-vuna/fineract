@@ -7,7 +7,7 @@ on:
 #      - app/**
 #  workflow_dispatch:
 env:
-  IMAGE: 'paymenthub-registry'
+  IMAGE: 'ekesha-fineract'
 
 jobs:
   build:
@@ -89,7 +89,7 @@ jobs:
         # Push the Docker image to OCI Container Registry
       - name: 'Publish'
         run: |-
-          docker push "${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:$GITHUB_SHA"
+#          docker push "${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:$GITHUB_SHA"
           docker push "${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:latest"
 
 #      - name: Deploy to K8S
