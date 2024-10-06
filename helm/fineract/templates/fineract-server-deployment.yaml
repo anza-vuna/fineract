@@ -243,22 +243,22 @@ data:
 # domains:
 #  - api.vuna.io
 
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: ocirsecret
-  annotations:
-    meta.helm.sh/release-name: "ph-ee-backend"  # Adjust this as per your release name
-    meta.helm.sh/release-namespace: "paymenthub-ns"  # Adjust this as per your namespace
-  labels:
-    app.kubernetes.io/managed-by: "Helm"
-type: Opaque
-data:
-  docker-server: "bGhyLm9jaXIuaW8="
-  docker-username: "bHJiY2tnNWFjdWd2L2FsZXhAdnVuYS5pbw=="
-  docker-password: "anBlU1ldZWUwTVA6WGloK11BOV8="
-  docker-email: "YWxleEB2dW5hLmlv"
+#---
+#apiVersion: v1
+#kind: Secret
+#metadata:
+#  name: ocirsecret
+#  annotations:
+#    meta.helm.sh/release-name: "ph-ee-backend"  # Adjust this as per your release name
+#    meta.helm.sh/release-namespace: "paymenthub-ns"  # Adjust this as per your namespace
+#  labels:
+#    app.kubernetes.io/managed-by: "Helm"
+#type: Opaque
+#data:
+#  docker-server: "bGhyLm9jaXIuaW8="
+#  docker-username: "bHJiY2tnNWFjdWd2L2FsZXhAdnVuYS5pbw=="
+#  docker-password: "anBlU1ldZWUwTVA6WGloK11BOV8="
+#  docker-email: "YWxleEB2dW5hLmlv"
 
 
 {{- end }}
