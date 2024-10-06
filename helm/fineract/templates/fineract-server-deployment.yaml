@@ -28,7 +28,7 @@ metadata:
 spec:
   ports:
     - name: 443-8080
-#      protocol: TCP
+      protocol: TCP
       port: {{ .Values.fineract.spec.template.spec.containers.env.CONTAINER_PORT }}
       targetPort: {{ .Values.fineract.spec.template.spec.containers.env.FINERACT_SERVER_PORT }}
   selector:
