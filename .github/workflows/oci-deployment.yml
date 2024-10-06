@@ -103,7 +103,6 @@ jobs:
         # Deploy the Docker image to the GKE cluster
       - name: 'Deploy to K8S'
         run: |
-          # Add Helm repo if needed (adjust to your Helm chart repository)
           helm repo add camunda-platform https://helm.camunda.io
           helm repo add elastic http://helm.elastic.co
           helm repo add kibana http://helm.elastic.co
