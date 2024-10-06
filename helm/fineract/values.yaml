@@ -1,6 +1,6 @@
 fineract:
   enabled: true
-  db: cloud-sql-proxy
+#  db: cloud-sql-proxy
   DFSPIDS: ""
   SPRING_PROFILES_ACTIVE: "test"
   image: ""
@@ -11,36 +11,36 @@ fineract:
           env:
             FINERACT_DEFAULT_TENANTDB_IDENTIFIER: ""
             FINERACT_DEFAULT_TENANTDB_NAME: ""
-            FINERACT_DEFAULT_TENANTDB_HOSTNAME: 127.0.0.1
+            FINERACT_DEFAULT_TENANTDB_HOSTNAME: ""
             FINERACT_DEFAULT_TENANTDB_PORT: 3306
             FINERACT_HIKARI_PASSWORD: ""
             FINERACT_DEFAULT_TENANTDB_PWD: ""
             FINERACT_HIKARI_USERNAME: ""
             FINERACT_ADMIN_USERNAME: ""
             FINERACT_HIKARI_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-            FINERACT_HIKARI_JDBC_URL: "jdbc:mysql://localhost:3306/fineract_tenants?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&sessionVariables=time_zone='-00:00'"
+            FINERACT_HIKARI_JDBC_URL: ""
             FINERACT_SERVER_PORT: 8080
             CONTAINER_PORT: 443
   preStopScript: 'echo -e "******Fineract is stopping********";'
   ingress:
     enabled: true
-    hostname: "api.vuna.io"
+#    hostname: "api.vuna.io"
     path: "/fineract-provider"
     #wildcardhostname: "*.kemetstax.org"
     annotations:
       # This tells Google Cloud to associate the External Load Balancer with the static IP which we created earlier
-      kubernetes.io/ingress.global-static-ip-name: ekesha-static-ip-dbfb2e8d
-      networking.gke.io/managed-certificates: fin-managed-ssl-certificate-dbfb2e8d
-      # kubernetes.io/ingress.class: "nginx"
+#      kubernetes.io/ingress.global-static-ip-name: ekesha-static-ip-dbfb2e8d
+#      networking.gke.io/managed-certificates: fin-managed-ssl-certificate-dbfb2e8d
+       kubernetes.io/ingress.class: "nginx"
       # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       # This tells Google Cloud to create an External Load Balancer to realize this Ingress
-      kubernetes.io/ingress.class: "gce"
+#      kubernetes.io/ingress.class: "gce"
       #nginx.org/redirect-to-https: "true"
 #      kubernetes.io/ingress.allow-http: "false"
   resources:
     limits:
-      cpu: "2000m"
+      cpu: "1500m"
       memory: "8Gi"
     requests:
-      cpu: "1000m"
+      cpu: "500m"
       memory: "4Gi"
