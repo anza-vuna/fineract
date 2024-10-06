@@ -23,7 +23,7 @@ metadata:
   labels:
     app: fineract-server
   name: fineract-server
-  annotations:
+#  annotations:
 #    cloud.google.com/neg: '{"ingress": true}'
 spec:
   ports:
