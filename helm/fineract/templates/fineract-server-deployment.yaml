@@ -248,6 +248,11 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: ocirsecret
+  annotations:
+    meta.helm.sh/release-name: "ph-ee-backend"  # Adjust this as per your release name
+    meta.helm.sh/release-namespace: "paymenthub-ns"  # Adjust this as per your namespace
+  labels:
+    app.kubernetes.io/managed-by: "Helm"
 type: Opaque
 data:
   docker-server: "bGhyLm9jaXIuaW8="
