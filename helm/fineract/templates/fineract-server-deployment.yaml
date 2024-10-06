@@ -24,7 +24,7 @@ metadata:
     app: fineract-server
   name: fineract-server
   annotations:
-    cloud.google.com/neg: '{"ingress": true}'
+#    cloud.google.com/neg: '{"ingress": true}'
 spec:
   ports:
     - name: 443-8080
@@ -34,7 +34,7 @@ spec:
   selector:
     app: fineract-server
     tier: backend
-  type: ClusterIP
+  type: NodePort
 #  loadBalancerIP: 34.45.178.100
 ---
 apiVersion: apps/v1
@@ -242,5 +242,18 @@ data:
 #spec:
 # domains:
 #  - api.vuna.io
-    
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ocirsecret
+type: Opaque
+data:
+  docker-server: "bGhyLm9jaXIuaW8="
+  docker-username: "bHJiY2tnNWFjdWd2L2FsZXhAdnVuYS5pbw=="
+  docker-password: "anBlU1ldZWUwTVA6WGloK11BOV8="
+  docker-email: "YWxleEB2dW5hLmlv"
+
+
 {{- end }}
