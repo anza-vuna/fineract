@@ -122,5 +122,5 @@ jobs:
           --set .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_PWD=${{ secrets.FINERACT_HIKARI_PASSWORD }} \
           --set .Values.fineract.spec.template.spec.containers.env.FINERACT_HIKARI_PASSWORD=${{ secrets.FINERACT_HIKARI_PASSWORD }} \
           --set .Values.fineract.spec.template.spec.containers.env.FINERACT_HIKARI_USERNAME=${{ secrets.FINERACT_HIKARI_USERNAME }} \
-          --set .Values.fineract.spec.template.spec.containers.env.FINERACT_ADMIN_USERNAME=${{ secrets.FINERACT_HIKARI_USERNAME }} \
-          --set .Values.fineract.spec.template.spec.containers.env.FINERACT_HIKARI_JDBC_URL=${{ secrets.FINERACT_HIKARI_JDBC_URL }}
+          --set .Values.fineract.spec.template.spec.containers.env.FINERACT_ADMIN_USERNAME=${{ secrets.FINERACT_HIKARI_USERNAME }}
+#          --set .Values.fineract.spec.template.spec.containers.env.FINERACT_HIKARI_JDBC_URL=${{ secrets.FINERACT_HIKARI_JDBC_URL }}
