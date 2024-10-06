@@ -61,6 +61,8 @@ spec:
       - name: fineract-server
         image: "{{ .Values.fineract.image }}"
         imagePullPolicy: Always
+      imagePullSecrets:
+      - name: ocirsecret
         resources:
           limits:
             cpu: "{{ .Values.fineract.resources.limits.cpu }}"
