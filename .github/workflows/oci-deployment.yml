@@ -100,16 +100,9 @@ jobs:
 #        run: |
 #          kubectl -n free-ns rollout restart deployment nginx
 
-          # Deploy the Docker image to the GKE cluster
+        # Deploy the Docker image to the GKE cluster
       - name: 'Deploy to K8S'
         run: |
-#          # Fetch secrets from Google Cloud Secret Manager
-#          export FINERACT_DEFAULT_TENANTDB_IDENTIFIER_TEST=${{ FINERACT_DEFAULT_TENANTDB_IDENTIFIER_TEST }}
-#          export FINERACT_DEFAULT_TENANTDB_NAME_TEST=${{ FINERACT_DEFAULT_TENANTDB_NAME_TEST }}
-#          export FINERACT_HIKARI_PASSWORD_TEST=${{ FINERACT_HIKARI_PASSWORD_TEST }}
-#          export FINERACT_HIKARI_USERNAME_TEST=${{ FINERACT_HIKARI_USERNAME_TEST }}
-#          export FINERACT_DEFAULT_TENANTDB_HOSTNAME_TEST=${{ FINERACT_DEFAULT_TENANTDB_HOSTNAME_TEST }}
-              
           # Add Helm repo if needed (adjust to your Helm chart repository)
           helm repo add camunda-platform https://helm.camunda.io
           helm repo add elastic http://helm.elastic.co
