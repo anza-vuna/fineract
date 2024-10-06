@@ -118,9 +118,7 @@ jobs:
           --set fineract.image=${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:latest \
           --set .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_IDENTIFIER=${{ secrets.FINERACT_DEFAULT_TENANTDB_IDENTIFIER }} \
           --set .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_NAME=${{ secrets.FINERACT_DEFAULT_TENANTDB_NAME }} \
-#          --set .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_HOSTNAME=${{ secrets.FINERACT_DEFAULT_TENANTDB_HOSTNAME }} \
           --set .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_PWD=${{ secrets.FINERACT_HIKARI_PASSWORD }} \
           --set .Values.fineract.spec.template.spec.containers.env.FINERACT_HIKARI_PASSWORD=${{ secrets.FINERACT_HIKARI_PASSWORD }} \
           --set .Values.fineract.spec.template.spec.containers.env.FINERACT_HIKARI_USERNAME=${{ secrets.FINERACT_HIKARI_USERNAME }} \
           --set .Values.fineract.spec.template.spec.containers.env.FINERACT_ADMIN_USERNAME=${{ secrets.FINERACT_HIKARI_USERNAME }}
-#          --set .Values.fineract.spec.template.spec.containers.env.FINERACT_HIKARI_JDBC_URL=${{ secrets.FINERACT_HIKARI_JDBC_URL }}
