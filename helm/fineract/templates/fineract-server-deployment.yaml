@@ -56,7 +56,7 @@ spec:
         app: fineract-server
         tier: backend
     spec:
-      serviceAccountName: cloudsql-ksa
+#      serviceAccountName: cloudsql-ksa
       containers: 
       - name: fineract-server
         image: "{{ .Values.fineract.image }}"
