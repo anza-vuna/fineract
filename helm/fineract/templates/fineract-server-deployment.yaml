@@ -29,8 +29,8 @@ spec:
   ports:
     - name: 443-8080
       protocol: TCP
-      port: <CONTAINER_PORT>
-      targetPort: <FINERACT_SERVER_PORT>
+      port: "<CONTAINER_PORT>"
+      targetPort: "<FINERACT_SERVER_PORT>"
   selector:
     app: fineract-server
 #    tier: backend
@@ -73,52 +73,52 @@ spec:
         livenessProbe:
           httpGet:
             path: /fineract-provider/actuator/health/liveness
-            port: 8080
+            port: <FINERACT_SERVER_PORT>
           initialDelaySeconds: 720
           periodSeconds: 1
         readinessProbe:
           httpGet:
             path: /fineract-provider/actuator/health/readiness
-            port: 8080
+            port: "<FINERACT_SERVER_PORT>"
           initialDelaySeconds: 360
           periodSeconds: 1
         env:
           - name: FINERACT_SERVER_PORT
-            value: <FINERACT_SERVER_PORT>
+            value: "<FINERACT_SERVER_PORT>"
           - name: FINERACT_NODE_ID
-            value: <FINERACT_NODE_ID>
+            value: "<FINERACT_NODE_ID>"
           - name: FINERACT_HIKARI_DRIVER_CLASS_NAME
-            value: <FINERACT_HIKARI_DRIVER_CLASS_NAME>
+            value: "<FINERACT_HIKARI_DRIVER_CLASS_NAME>"
           - name: FINERACT_HIKARI_JDBC_URL
-            value: <FINERACT_HIKARI_JDBC_URL>
+            value: "<FINERACT_HIKARI_JDBC_URL>"
           - name: FINERACT_HIKARI_USERNAME
-            value: <FINERACT_HIKARI_USERNAME>
+            value: "<FINERACT_HIKARI_USERNAME>"
 #            valueFrom:
 #              secretKeyRef:
 #                name: fineract-tenants-db-secret
 #                key: username
           - name: FINERACT_HIKARI_PASSWORD
-            value: <FINERACT_HIKARI_PASSWORD>
+            value: "<FINERACT_HIKARI_PASSWORD>"
 #            valueFrom:
 #              secretKeyRef:
 #                name: fineract-tenants-db-secret
 #                key: password
           - name: FINERACT_DEFAULT_TENANTDB_HOSTNAME
-            value: <FINERACT_DEFAULT_TENANTDB_HOSTNAME>
+            value: "<FINERACT_DEFAULT_TENANTDB_HOSTNAME>"
           - name: FINERACT_DEFAULT_TENANTDB_PORT
-            value: <FINERACT_DEFAULT_TENANTDB_PORT>
+            value: "<FINERACT_DEFAULT_TENANTDB_PORT>"
           - name: FINERACT_DEFAULT_TENANTDB_IDENTIFIER
-            value: <FINERACT_DEFAULT_TENANTDB_IDENTIFIER>
+            value: "<FINERACT_DEFAULT_TENANTDB_IDENTIFIER>"
           - name: FINERACT_DEFAULT_TENANTDB_NAME
-            value: <FINERACT_DEFAULT_TENANTDB_NAME>
+            value: "<FINERACT_DEFAULT_TENANTDB_NAME>"
           - name: FINERACT_DEFAULT_TENANTDB_UID
-            value: <FINERACT_DEFAULT_TENANTDB_UID>
+            value: "<FINERACT_DEFAULT_TENANTDB_UID>"
 #            valueFrom:
 #              secretKeyRef:
 #                name: fineract-tenants-db-secret
 #                key: username
           - name: FINERACT_DEFAULT_TENANTDB_PWD
-            value: <FINERACT_DEFAULT_TENANTDB_PWD>
+            value: "<FINERACT_DEFAULT_TENANTDB_PWD>"
 #            valueFrom:
 #              secretKeyRef:
 #                name: fineract-tenants-db-secret
@@ -130,7 +130,7 @@ spec:
           - name: "FINERACT_SECURITY_OAUTH_ENABLED"
             value: 'false'
         ports:
-          - containerPort: <FINERACT_SERVER_PORT>
+          - containerPort: "<FINERACT_SERVER_PORT>"
             name: fineract-server
         lifecycle:
           preStop:
@@ -210,7 +210,7 @@ spec:
               service:
                 name: fineract-server
                 port: 
-                  number: {{ .Values.fineract.spec.template.spec.containers.env.CONTAINER_PORT }}
+                  number: <CONTAINER_PORT>
 {{- end }}
 ---
 apiVersion: v1
