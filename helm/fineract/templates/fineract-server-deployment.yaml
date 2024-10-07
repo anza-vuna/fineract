@@ -29,8 +29,8 @@ spec:
   ports:
     - name: 443-8080
       protocol: TCP
-      port: {{ .Values.fineract.spec.template.spec.containers.env.CONTAINER_PORT }}
-      targetPort: {{ .Values.fineract.spec.template.spec.containers.env.FINERACT_SERVER_PORT }}
+      port: {{ .Values.fineract.env.CONTAINER_PORT }}
+      targetPort: {{ .Values.fineract.env.FINERACT_SERVER_PORT }}
   selector:
     app: fineract-server
 #    tier: backend
@@ -84,41 +84,41 @@ spec:
           periodSeconds: 1
         env:
           - name: FINERACT_SERVER_PORT
-            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_SERVER_PORT }}"
+            value: "{{ .Values.fineract.env.FINERACT_SERVER_PORT }}"
           - name: FINERACT_NODE_ID
-            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_NODE_ID }}"
+            value: "{{ .Values.fineract.env.FINERACT_NODE_ID }}"
           - name: FINERACT_HIKARI_DRIVER_CLASS_NAME
-            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_HIKARI_DRIVER_CLASS_NAME }}"
+            value: "{{ .Values.fineract.env.FINERACT_HIKARI_DRIVER_CLASS_NAME }}"
           - name: FINERACT_HIKARI_JDBC_URL
-            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_HIKARI_JDBC_URL }}"
+            value: "{{ .Values.fineract.env.FINERACT_HIKARI_JDBC_URL }}"
           - name: FINERACT_HIKARI_USERNAME
-            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_HIKARI_USERNAME }}"
+            value: "{{ .Values.fineract.env.FINERACT_HIKARI_USERNAME }}"
 #            valueFrom:
 #              secretKeyRef:
 #                name: fineract-tenants-db-secret
 #                key: username
           - name: FINERACT_HIKARI_PASSWORD
-            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_HIKARI_PASSWORD }}"
+            value: "{{ .Values.fineract.env.FINERACT_HIKARI_PASSWORD }}"
 #            valueFrom:
 #              secretKeyRef:
 #                name: fineract-tenants-db-secret
 #                key: password
           - name: FINERACT_DEFAULT_TENANTDB_HOSTNAME
-            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_HOSTNAME }}"
+            value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_HOSTNAME }}"
           - name: FINERACT_DEFAULT_TENANTDB_PORT
-            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_PORT }}"
+            value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_PORT }}"
           - name: FINERACT_DEFAULT_TENANTDB_IDENTIFIER
-            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_IDENTIFIER }}"
+            value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_IDENTIFIER }}"
           - name: FINERACT_DEFAULT_TENANTDB_NAME
-            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_NAME }}"
+            value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_NAME }}"
           - name: FINERACT_DEFAULT_TENANTDB_UID
-            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_UID }}"
+            value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_UID }}"
 #            valueFrom:
 #              secretKeyRef:
 #                name: fineract-tenants-db-secret
 #                key: username
           - name: FINERACT_DEFAULT_TENANTDB_PWD
-            value: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_PWD }}"
+            value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_PWD }}"
 #            valueFrom:
 #              secretKeyRef:
 #                name: fineract-tenants-db-secret
@@ -130,7 +130,7 @@ spec:
           - name: "FINERACT_SECURITY_OAUTH_ENABLED"
             value: 'false'
         ports:
-          - containerPort: "{{ .Values.fineract.spec.template.spec.containers.env.FINERACT_SERVER_PORT }}"
+          - containerPort: "{{ .Values.fineract.env.FINERACT_SERVER_PORT }}"
             name: fineract-server
         lifecycle:
           preStop:
