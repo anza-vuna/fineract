@@ -29,8 +29,8 @@ spec:
   ports:
     - name: 443-8080
       protocol: TCP
-      port: "<CONTAINER_PORT>"
-      targetPort: "<FINERACT_SERVER_PORT>"
+      port: <CONTAINER_PORT>
+      targetPort: <FINERACT_SERVER_PORT>
   selector:
     app: fineract-server
 #    tier: backend
@@ -79,7 +79,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /fineract-provider/actuator/health/readiness
-            port: "<FINERACT_SERVER_PORT>"
+            port: <FINERACT_SERVER_PORT>
           initialDelaySeconds: 360
           periodSeconds: 1
         env:
@@ -106,7 +106,7 @@ spec:
           - name: FINERACT_DEFAULT_TENANTDB_HOSTNAME
             value: "<FINERACT_DEFAULT_TENANTDB_HOSTNAME>"
           - name: FINERACT_DEFAULT_TENANTDB_PORT
-            value: "<FINERACT_DEFAULT_TENANTDB_PORT>"
+            value: <FINERACT_DEFAULT_TENANTDB_PORT>
           - name: FINERACT_DEFAULT_TENANTDB_IDENTIFIER
             value: "<FINERACT_DEFAULT_TENANTDB_IDENTIFIER>"
           - name: FINERACT_DEFAULT_TENANTDB_NAME
@@ -130,7 +130,7 @@ spec:
           - name: "FINERACT_SECURITY_OAUTH_ENABLED"
             value: 'false'
         ports:
-          - containerPort: "<FINERACT_SERVER_PORT>"
+          - containerPort: <FINERACT_SERVER_PORT>
             name: fineract-server
         lifecycle:
           preStop:
