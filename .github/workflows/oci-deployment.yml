@@ -131,8 +131,8 @@ jobs:
                
           helm repo update
           
-          sed -i 's|<FINERACT_SERVER_PORT>|'"${{ secrets.FINERACT_SERVER_PORT }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-          sed -i 's|<FINERACT_NODE_ID>|'"${{ secrets.FINERACT_NODE_ID }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
+#          sed -i 's|<FINERACT_SERVER_PORT>|'"${{ secrets.FINERACT_SERVER_PORT }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
+#          sed -i 's|<FINERACT_NODE_ID>|'"${{ secrets.FINERACT_NODE_ID }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
 #          sed -i 's|<FINERACT_HIKARI_DRIVER_CLASS_NAME>|'"${{ secrets.FINERACT_HIKARI_DRIVER_CLASS_NAME }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
 #          sed -i 's|<FINERACT_HIKARI_JDBC_URL>|'"${{ secrets.FINERACT_HIKARI_JDBC_URL }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
 #          sed -i 's|<FINERACT_HIKARI_USERNAME>|'"${{ secrets.FINERACT_HIKARI_USERNAME }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
