@@ -115,6 +115,9 @@ jobs:
             sed -i 's|<FINERACT_DEFAULT_TENANTDB_PWD>|'"${{ secrets.FINERACT_HIKARI_PASSWORD }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
             sed -i 's|<CONTAINER_PORT>|'"${{ secrets.CONTAINER_PORT }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
 
+      - name: Verify port substitution (optional)
+        run: cat helm/fineract/templates/fineract-server-deployment.yaml
+
         # Deploy the Docker image to the GKE cluster
       - name: 'Deploy to K8S'
         run: |
