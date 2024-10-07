@@ -84,41 +84,41 @@ spec:
           periodSeconds: 1
         env:
           - name: FINERACT_SERVER_PORT
-            value: "<FINERACT_SERVER_PORT>"
+            value: <FINERACT_SERVER_PORT>
           - name: FINERACT_NODE_ID
-            value: "<FINERACT_NODE_ID>"
+            value: <FINERACT_NODE_ID>
           - name: FINERACT_HIKARI_DRIVER_CLASS_NAME
-            value: "<FINERACT_HIKARI_DRIVER_CLASS_NAME>"
+            value: <FINERACT_HIKARI_DRIVER_CLASS_NAME>
           - name: FINERACT_HIKARI_JDBC_URL
-            value: "jdbc:mysql://<FINERACT_DEFAULT_TENANTDB_HOSTNAME>:<FINERACT_DEFAULT_TENANTDB_PORT>/fineract_tenants?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&sessionVariables=time_zone='-00:00'"
+            value: jdbc:mysql://<FINERACT_DEFAULT_TENANTDB_HOSTNAME>:<FINERACT_DEFAULT_TENANTDB_PORT>/fineract_tenants?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&sessionVariables=time_zone='-00:00'
           - name: FINERACT_HIKARI_USERNAME
-            value: "<FINERACT_HIKARI_USERNAME>"
+            value: <FINERACT_HIKARI_USERNAME>
 #            valueFrom:
 #              secretKeyRef:
 #                name: fineract-tenants-db-secret
 #                key: username
           - name: FINERACT_HIKARI_PASSWORD
-            value: "<FINERACT_HIKARI_PASSWORD>"
+            value: <FINERACT_HIKARI_PASSWORD>
 #            valueFrom:
 #              secretKeyRef:
 #                name: fineract-tenants-db-secret
 #                key: password
           - name: FINERACT_DEFAULT_TENANTDB_HOSTNAME
-            value: "<FINERACT_DEFAULT_TENANTDB_HOSTNAME>"
+            value: <FINERACT_DEFAULT_TENANTDB_HOSTNAME>
           - name: FINERACT_DEFAULT_TENANTDB_PORT
             value: <FINERACT_DEFAULT_TENANTDB_PORT>
           - name: FINERACT_DEFAULT_TENANTDB_IDENTIFIER
-            value: "<FINERACT_DEFAULT_TENANTDB_IDENTIFIER>"
+            value: <FINERACT_DEFAULT_TENANTDB_IDENTIFIER>
           - name: FINERACT_DEFAULT_TENANTDB_NAME
-            value: "<FINERACT_DEFAULT_TENANTDB_NAME>"
+            value: <FINERACT_DEFAULT_TENANTDB_NAME>
           - name: FINERACT_DEFAULT_TENANTDB_UID
-            value: "<FINERACT_DEFAULT_TENANTDB_UID>"
+            value: <FINERACT_DEFAULT_TENANTDB_UID>
 #            valueFrom:
 #              secretKeyRef:
 #                name: fineract-tenants-db-secret
 #                key: username
           - name: FINERACT_DEFAULT_TENANTDB_PWD
-            value: "<FINERACT_DEFAULT_TENANTDB_PWD>"
+            value: <FINERACT_DEFAULT_TENANTDB_PWD>
 #            valueFrom:
 #              secretKeyRef:
 #                name: fineract-tenants-db-secret
