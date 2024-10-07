@@ -91,7 +91,6 @@ jobs:
         run: |-
           docker push "${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:$GITHUB_SHA"
           docker push "${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:latest"
-
       - name: 'Deploy to K8S'
         run: |
           helm repo add camunda-platform https://helm.camunda.io
