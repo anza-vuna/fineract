@@ -145,7 +145,7 @@ jobs:
           sed -i 's|<FINERACT_DEFAULT_TENANTDB_PWD>|'"${{ secrets.FINERACT_HIKARI_PASSWORD }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
           sed -i 's|<CONTAINER_PORT>|'"${{ secrets.CONTAINER_PORT }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
 
-          helm upgrade -f helm/fineract/values.yaml ph-ee-backend helm/fineract/ \
+          helm upgrade -f helm/fineract/Values.yaml ph-ee-backend helm/fineract/ \
           --install --namespace ${{ secrets.NAMESPACE }} \
           --set fineract.image=${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:latest \
           --set fineract.spec.template.spec.containers.env.FINERACT_SERVER_PORT=${{ secrets.FINERACT_SERVER_PORT }} \
