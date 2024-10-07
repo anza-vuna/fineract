@@ -105,7 +105,7 @@ jobs:
                
           helm repo update
           
-          helm upgrade -f helm/fineract/Values.yaml ph-ee-backend helm/fineract/ \
+          helm template -f helm/fineract/Values.yaml ph-ee-backend helm/fineract/ \
           --install --namespace "${{ secrets.NAMESPACE }}" \
           --set fineract.image="${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:latest" \
           --set fineract.env.FINERACT_SERVER_PORT="${{ secrets.FINERACT_SERVER_PORT }}" \
