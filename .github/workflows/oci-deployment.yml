@@ -122,7 +122,7 @@ jobs:
           --install --namespace ${{ secrets.NAMESPACE }} \
           --set fineract.image=${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:latest \
           --set env.FINERACT_SERVER_PORT=8080 \
-          --set env.FINERACT_HIKARI_JDBC_URL=jdbc:mysql://mysql:3306/fineract \
+          --set env.FINERACT_HIKARI_JDBC_URL=${{ secrets.FINERACT_HIKARI_JDBC_URL }} \
           --set env.FINERACT_HIKARI_USERNAME=fineract \
           --set env.FINERACT_HIKARI_PASSWORD=password \
           --set env.FINERACT_DEFAULT_TENANTDB_PORT=3306
