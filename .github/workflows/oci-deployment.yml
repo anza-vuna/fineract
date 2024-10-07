@@ -92,33 +92,6 @@ jobs:
           docker push "${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:$GITHUB_SHA"
           docker push "${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:latest"
 
-#      - name: Deploy to K8S
-#        run: |
-#          sed -i 's/<DOCKER_OBJECT_STORAGE_NAMESPACE>/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/g' app/k8s-deployment.yaml
-#          kubectl -n free-ns apply -f app/k8s-deployment.yaml
-#      - name: Restart nginx
-#        run: |
-#          kubectl -n free-ns rollout restart deployment nginx
-#      - name: Replace secrets in manifest
-#        run: |
-#            sed -i 's|<FINERACT_SERVER_PORT>|'"${{ secrets.FINERACT_SERVER_PORT }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-#            sed -i 's|<FINERACT_NODE_ID>|'"${{ secrets.FINERACT_NODE_ID }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-#            sed -i 's|<FINERACT_HIKARI_DRIVER_CLASS_NAME>|'"${{ secrets.FINERACT_HIKARI_DRIVER_CLASS_NAME }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-#            sed -i 's|<FINERACT_HIKARI_JDBC_URL>|'"${{ secrets.FINERACT_HIKARI_JDBC_URL }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-#            sed -i 's|<FINERACT_HIKARI_USERNAME>|'"${{ secrets.FINERACT_HIKARI_USERNAME }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-#            sed -i 's|<FINERACT_HIKARI_PASSWORD>|'"${{ secrets.FINERACT_HIKARI_PASSWORD }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-#            sed -i 's|<FINERACT_DEFAULT_TENANTDB_HOSTNAME>|'"${{ secrets.FINERACT_DEFAULT_TENANTDB_HOSTNAME }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-#            sed -i 's|<FINERACT_DEFAULT_TENANTDB_PORT>|'"${{ secrets.FINERACT_DEFAULT_TENANTDB_PORT }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-#            sed -i 's|<FINERACT_DEFAULT_TENANTDB_IDENTIFIER>|'"${{ secrets.FINERACT_DEFAULT_TENANTDB_IDENTIFIER }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-#            sed -i 's|<FINERACT_DEFAULT_TENANTDB_NAME>|'"${{ secrets.FINERACT_DEFAULT_TENANTDB_NAME }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-#            sed -i 's|<FINERACT_DEFAULT_TENANTDB_UID>|'"${{ secrets.FINERACT_HIKARI_USERNAME }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-#            sed -i 's|<FINERACT_DEFAULT_TENANTDB_PWD>|'"${{ secrets.FINERACT_HIKARI_PASSWORD }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-#            sed -i 's|<CONTAINER_PORT>|'"${{ secrets.CONTAINER_PORT }}"'|g' helm/fineract/templates/fineract-server-deployment.yaml
-#
-#      - name: Verify port substitution (optional)
-#        run: cat helm/fineract/templates/fineract-server-deployment.yaml
-
-      # Deploy the Docker image to the GKE cluster
       - name: 'Deploy to K8S'
         run: |
           helm repo add camunda-platform https://helm.camunda.io
