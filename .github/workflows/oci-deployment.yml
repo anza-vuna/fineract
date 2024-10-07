@@ -148,14 +148,16 @@ jobs:
           helm upgrade -f helm/fineract/values.yaml ph-ee-backend helm/fineract/ \
           --install --namespace ${{ secrets.NAMESPACE }} \
           --set fineract.image=${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:latest \
-          --set env.FINERACT_SERVER_PORT=8080 \
-          --set env.FINERACT_HIKARI_JDBC_URL=${{ secrets.FINERACT_HIKARI_JDBC_URL }} \
-          --set env.FINERACT_HIKARI_USERNAME=fineract \
-          --set env.FINERACT_HIKARI_PASSWORD=password \
-          --set env.FINERACT_DEFAULT_TENANTDB_PORT=3306
-#          --set fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_IDENTIFIER=${{ secrets.FINERACT_DEFAULT_TENANTDB_IDENTIFIER }} \
-#          --set fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_NAME=${{ secrets.FINERACT_DEFAULT_TENANTDB_NAME }} \
-#          --set fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_PWD=${{ secrets.FINERACT_HIKARI_PASSWORD }} \
-#          --set fineract.spec.template.spec.containers.env.FINERACT_HIKARI_PASSWORD=${{ secrets.FINERACT_HIKARI_PASSWORD }} \
-#          --set fineract.spec.template.spec.containers.env.FINERACT_HIKARI_USERNAME=${{ secrets.FINERACT_HIKARI_USERNAME }} \
-#          --set fineract.spec.template.spec.containers.env.FINERACT_ADMIN_USERNAME=${{ secrets.FINERACT_HIKARI_USERNAME }}
+          --set fineract.spec.template.spec.containers.env.FINERACT_SERVER_PORT=${{ secrets.FINERACT_SERVER_PORT }} \
+          --set fineract.spec.template.spec.containers.env.FINERACT_NODE_ID=${{ secrets.FINERACT_NODE_ID }} \
+          --set fineract.spec.template.spec.containers.env.FINERACT_HIKARI_DRIVER_CLASS_NAME=${{ secrets.FINERACT_HIKARI_DRIVER_CLASS_NAME }} \
+          --set fineract.spec.template.spec.containers.env.FINERACT_HIKARI_JDBC_URL=${{ secrets.FINERACT_HIKARI_JDBC_URL }} \
+          --set fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_HOSTNAME=${{ secrets.FINERACT_DEFAULT_TENANTDB_HOSTNAME }} \
+          --set fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_PORT=${{ secrets.FINERACT_DEFAULT_TENANTDB_PORT }} \
+          --set fineract.spec.template.spec.containers.env.CONTAINER_PORT=${{ secrets.CONTAINER_PORT }} \
+          --set fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_IDENTIFIER=${{ secrets.FINERACT_DEFAULT_TENANTDB_IDENTIFIER }} \
+          --set fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_NAME=${{ secrets.FINERACT_DEFAULT_TENANTDB_NAME }} \
+          --set fineract.spec.template.spec.containers.env.FINERACT_DEFAULT_TENANTDB_PWD=${{ secrets.FINERACT_HIKARI_PASSWORD }} \
+          --set fineract.spec.template.spec.containers.env.FINERACT_HIKARI_PASSWORD=${{ secrets.FINERACT_HIKARI_PASSWORD }} \
+          --set fineract.spec.template.spec.containers.env.FINERACT_HIKARI_USERNAME=${{ secrets.FINERACT_HIKARI_USERNAME }} \
+          --set fineract.spec.template.spec.containers.env.FINERACT_ADMIN_USERNAME=${{ secrets.FINERACT_HIKARI_USERNAME }}
