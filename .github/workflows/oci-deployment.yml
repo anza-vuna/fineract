@@ -120,5 +120,6 @@ jobs:
           --set fineract.env.FINERACT_HIKARI_PASSWORD="${{ secrets.FINERACT_HIKARI_PASSWORD }}" \
           --set fineract.env.FINERACT_HIKARI_USERNAME="${{ secrets.FINERACT_HIKARI_USERNAME }}" \
           --set fineract.env.FINERACT_ADMIN_USERNAME="${{ secrets.FINERACT_HIKARI_USERNAME }}" \
+          --set fineract.env.FINERACT_DEFAULT_TENANTDB_UID="${{ secretes.FINERACT_HIKARI_USERNAME }}" \
           -f fineract-helm/values.yaml ph-ee-backend fineract-helm/ \
           --install --namespace "${{ secrets.NAMESPACE }}"
