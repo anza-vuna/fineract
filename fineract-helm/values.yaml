@@ -20,6 +20,7 @@ fineract:
     FINERACT_HIKARI_JDBC_URL: "jdbc:mysql://paymenthub-mysql-db-system:3306/fineract_tenants?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&sessionVariables=time_zone='-00:00'"
     FINERACT_SERVER_PORT: 8080
     CONTAINER_PORT: 443
+    FINERACT_NODE_ID: ''
   preStopScript: 'echo -e "******Fineract is stopping********";'
   ingress:
     enabled: false
