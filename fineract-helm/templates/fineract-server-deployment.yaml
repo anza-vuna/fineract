@@ -210,7 +210,7 @@ spec:
               service:
                 name: fineract-server
                 port: 
-                  number: {{ .Values.fineract.spec.template.spec.containers.env.CONTAINER_PORT }}
+                  number: {{ .Values.fineract.env.CONTAINER_PORT }}
 {{- end }}
 ---
 apiVersion: v1
