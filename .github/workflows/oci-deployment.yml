@@ -95,16 +95,6 @@ jobs:
         # Deploy the Docker image to the GKE cluster
       - name: 'Deploy to K8S'
         run: |-
-#          helm repo add camunda-platform https://helm.camunda.io
-#          helm repo add elastic http://helm.elastic.co
-#          helm repo add kibana http://helm.elastic.co
-#          helm repo add mysql https://charts.bitnami.com/bitnami
-#          helm repo add kong https://charts.konghq.com
-#          helm repo add keycloak https://codecentric.github.io/helm-charts
-#          helm repo add redis https://charts.bitnami.com/bitnami
-          
-          helm repo update
-          
           helm upgrade \
           --set fineract.image="${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:latest" \
           --set fineract.env.FINERACT_SERVER_PORT="${{ secrets.FINERACT_SERVER_PORT }}" \
