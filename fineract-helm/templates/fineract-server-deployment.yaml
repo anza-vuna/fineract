@@ -57,7 +57,7 @@ spec:
         tier: backend
     spec:
       imagePullSecrets:
-        - name: ocirsecret
+      - name: ocirsecret
       containers: 
       - name: fineract-server
         image: "{{ .Values.fineract.image }}"
