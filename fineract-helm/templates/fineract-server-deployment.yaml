@@ -56,13 +56,12 @@ spec:
         app: fineract-server
         tier: backend
     spec:
-#      serviceAccountName: cloudsql-ksa
+      imagePullSecrets:
+        - name: ocirsecret
       containers: 
       - name: fineract-server
         image: "{{ .Values.fineract.image }}"
         imagePullPolicy: Always
-      imagePullSecrets:
-      - name: ocirsecret
         resources:
           limits:
             cpu: "{{ .Values.fineract.resources.limits.cpu }}"
