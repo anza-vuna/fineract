@@ -62,7 +62,7 @@ spec:
         image: "{{ .Values.fineract.image }}"
         imagePullPolicy: Always
         imagePullSecrets:
-        - name: ocirsecret
+        - name: docker-registry
         resources:
           limits:
             cpu: "{{ .Values.fineract.resources.limits.cpu }}"
