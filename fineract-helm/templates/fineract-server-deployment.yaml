@@ -81,7 +81,7 @@ spec:
             periodSeconds: 1
           env:
             - name: FINERACT_SERVER_PORT
-              value: "{{ .Values.fineract.env.FINERACT_SERVER_PORT }}"
+              value: {{ .Values.fineract.env.FINERACT_SERVER_PORT }}
             - name: FINERACT_NODE_ID
               value: '{{ .Values.fineract.env.FINERACT_NODE_ID }}'
             - name: FINERACT_HIKARI_DRIVER_SOURCE_CLASS_NAME
