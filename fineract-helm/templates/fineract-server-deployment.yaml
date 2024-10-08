@@ -50,91 +50,76 @@ spec:
       tier: backend
   strategy:
     type: Recreate
-  template: 
+  template:
     metadata:
       labels:
         app: fineract-server
         tier: backend
     spec:
-      containers: 
-      - name: fineract-server
-        image: "{{ .Values.fineract.image }}"
-        imagePullPolicy: Always
+      containers:
+        - name: fineract-server
+          image: "{{ .Values.fineract.image }}"
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "{{ .Values.fineract.resources.limits.cpu }}"
+              memory: "{{ .Values.fineract.resources.limits.memory }}"
+            requests:
+              cpu: "{{ .Values.fineract.resources.requests.cpu }}"
+              memory: "{{ .Values.fineract.resources.requests.memory }}"
+          livenessProbe:
+            httpGet:
+              path: /fineract-provider/actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 720
+            periodSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /fineract-provider/actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 360
+            periodSeconds: 1
+          env:
+            - name: FINERACT_SERVER_PORT
+              value: "{{ .Values.fineract.env.FINERACT_SERVER_PORT }}"
+            - name: FINERACT_NODE_ID
+              value: '{{ .Values.fineract.env.FINERACT_NODE_ID }}'
+            - name: FINERACT_HIKARI_DRIVER_CLASS_NAME
+              value: "{{ .Values.fineract.env.FINERACT_HIKARI_DRIVER_CLASS_NAME }}"
+            - name: FINERACT_HIKARI_JDBC_URL
+              value: "{{ .Values.fineract.env.FINERACT_HIKARI_JDBC_URL }}"
+            - name: FINERACT_HIKARI_USERNAME
+              value: "{{ .Values.fineract.env.FINERACT_HIKARI_USERNAME }}"
+            - name: FINERACT_HIKARI_PASSWORD
+              value: "{{ .Values.fineract.env.FINERACT_HIKARI_PASSWORD }}"
+            - name: FINERACT_DEFAULT_TENANTDB_HOSTNAME
+              value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_HOSTNAME }}"
+            - name: FINERACT_DEFAULT_TENANTDB_PORT
+              value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_PORT }}"
+            - name: FINERACT_DEFAULT_TENANTDB_IDENTIFIER
+              value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_IDENTIFIER }}"
+            - name: FINERACT_DEFAULT_TENANTDB_NAME
+              value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_NAME }}"
+            - name: FINERACT_DEFAULT_TENANTDB_UID
+              value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_UID }}"
+            - name: FINERACT_DEFAULT_TENANTDB_PWD
+              value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_PWD }}"
+            - name: FINERACT_DEFAULT_TENANTDB_CONN_PARAMS
+              value: ''
+            - name: "FINERACT_SECURITY_BASICAUTH_ENABLED"
+              value: 'true'
+            - name: "FINERACT_SECURITY_OAUTH_ENABLED"
+              value: 'false'
+          ports:
+            - containerPort: {{ .Values.fineract.env.FINERACT_SERVER_PORT }}
+              name: fineract-server
+          lifecycle:
+            preStop:
+              exec:
+                command: ['sh', '-c', '{{ .Values.fineract.preStopScript}}']
       imagePullSecrets:
-      - name: ocirsecret
-        resources:
-          limits:
-            cpu: "{{ .Values.fineract.resources.limits.cpu }}"
-            memory: "{{ .Values.fineract.resources.limits.memory }}"
-          requests:
-            cpu: "{{ .Values.fineract.resources.requests.cpu }}"
-            memory: "{{ .Values.fineract.resources.requests.memory }}"
-        livenessProbe:
-          httpGet:
-            path: /fineract-provider/actuator/health/liveness
-            port: 8080
-          initialDelaySeconds: 720
-          periodSeconds: 1
-        readinessProbe:
-          httpGet:
-            path: /fineract-provider/actuator/health/readiness
-            port: 8080
-          initialDelaySeconds: 360
-          periodSeconds: 1
-        env:
-          - name: FINERACT_SERVER_PORT
-            value: "{{ .Values.fineract.env.FINERACT_SERVER_PORT }}"
-          - name: FINERACT_NODE_ID
-            value: '{{ .Values.fineract.env.FINERACT_NODE_ID }}'
-          - name: FINERACT_HIKARI_DRIVER_CLASS_NAME
-            value: "{{ .Values.fineract.env.FINERACT_HIKARI_DRIVER_CLASS_NAME }}"
-          - name: FINERACT_HIKARI_JDBC_URL
-            value: "{{ .Values.fineract.env.FINERACT_HIKARI_JDBC_URL }}"
-          - name: FINERACT_HIKARI_USERNAME
-            value: "{{ .Values.fineract.env.FINERACT_HIKARI_USERNAME }}"
-#            valueFrom:
-#              secretKeyRef:
-#                name: fineract-tenants-db-secret
-#                key: username
-          - name: FINERACT_HIKARI_PASSWORD
-            value: "{{ .Values.fineract.env.FINERACT_HIKARI_PASSWORD }}"
-#            valueFrom:
-#              secretKeyRef:
-#                name: fineract-tenants-db-secret
-#                key: password
-          - name: FINERACT_DEFAULT_TENANTDB_HOSTNAME
-            value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_HOSTNAME }}"
-          - name: FINERACT_DEFAULT_TENANTDB_PORT
-            value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_PORT }}"
-          - name: FINERACT_DEFAULT_TENANTDB_IDENTIFIER
-            value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_IDENTIFIER }}"
-          - name: FINERACT_DEFAULT_TENANTDB_NAME
-            value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_NAME }}"
-          - name: FINERACT_DEFAULT_TENANTDB_UID
-            value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_UID }}"
-#            valueFrom:
-#              secretKeyRef:
-#                name: fineract-tenants-db-secret
-#                key: username
-          - name: FINERACT_DEFAULT_TENANTDB_PWD
-            value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_PWD }}"
-#            valueFrom:
-#              secretKeyRef:
-#                name: fineract-tenants-db-secret
-#                key: password
-          - name: FINERACT_DEFAULT_TENANTDB_CONN_PARAMS
-            value: ''
-          - name: "FINERACT_SECURITY_BASICAUTH_ENABLED"
-            value: 'true'
-          - name: "FINERACT_SECURITY_OAUTH_ENABLED"
-            value: 'false'
-        ports:
-        - containerPort: {{ .Values.fineract.env.FINERACT_SERVER_PORT }}
-          name: fineract-server
-        lifecycle:
-          preStop:
-            exec:
-              command: ['sh', '-c', '{{ .Values.fineract.preStopScript}}']
+        - name: ocirsecret
+
 #      - name: cloud-sql-proxy
 #        # It is recommended to use the latest version of the Cloud SQL Auth Proxy
 #        # Make sure to update on a regular schedule!
@@ -179,13 +164,13 @@ spec:
 #            readOnly: true
 #          - name: mysql-initdb
 #            mountPath: /docker-entrypoint-initdb.d
-      volumes:
-        - name: cloudsql-instance-credentials
-          secret:
-            secretName: fineract-tenants-db-secret
-        - name: mysql-initdb
-          configMap:
-            name: mysql-preload-data-config
+#      volumes:
+#        - name: cloudsql-instance-credentials
+#          secret:
+#            secretName: fineract-tenants-db-secret
+#        - name: mysql-initdb
+#          configMap:
+#            name: mysql-preload-data-config
 # [END cloud_sql_proxy_k8s_container]
 
 ---
