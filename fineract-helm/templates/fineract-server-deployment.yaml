@@ -108,6 +108,14 @@ spec:
               value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_CONN_PARAMS }}"
             - name: FINERACT_DEFAULT_TENANTDB_RO_PORT
               value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_PORT }}"
+            - name: FINERACT_DEFAULT_TENANTDB_RO_HOSTNAME
+              value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_HOSTNAME }}"
+            - name: FINERACT_DEFAULT_TENANTDB_RO_UID
+              value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_UID }}"
+            - name: FINERACT_DEFAULT_TENANTDB_RO_PWD
+              value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_PWD }}"
+            - name: FINERACT_DEFAULT_TENANTDB_RO_NAME
+              value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_NAME }}"
             - name: "FINERACT_SECURITY_BASICAUTH_ENABLED"
               value: 'true'
             - name: "FINERACT_SECURITY_OAUTH_ENABLED"
