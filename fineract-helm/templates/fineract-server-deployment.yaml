@@ -228,8 +228,8 @@ metadata:
   #namespace: development
 data:
   init.sql: |
-    CREATE DATABASE IF NOT EXISTS `kemetx_tenants`;
-    CREATE DATABASE IF NOT EXISTS `kemetx_default`;
+    CREATE DATABASE IF NOT EXISTS `fineract_tenants`;
+    CREATE DATABASE IF NOT EXISTS `fineract_default`;
     GRANT ALL ON *.* TO 'root'@'%';
     GRANT ALL PRIVILEGES ON `fineract_tenants`.* TO 'mifos';
     GRANT ALL PRIVILEGES ON `fineract_default`.* TO 'mifos';
