@@ -22,6 +22,7 @@ fineract:
     CONTAINER_PORT: 443
     FINERACT_NODE_ID: ""
     FINERACT_DEFAULT_TENANTDB_UID: ""
+    FINERACT_DEFAULT_TENANTDB_CONN_PARAMS: ""
   preStopScript: 'echo -e "******Fineract is stopping********";'
   ingress:
     enabled: false
