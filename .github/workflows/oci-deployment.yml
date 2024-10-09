@@ -85,7 +85,7 @@ jobs:
           
           helm repo update
           
-          helm upgrade \
+          helm install \
           --set fineract.image="${{ secrets.DOCKER_URL }}/${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}/$IMAGE:latest" \
           --set fineract.env.FINERACT_SERVER_PORT=${{ secrets.FINERACT_SERVER_PORT }} \
           --set fineract.env.FINERACT_NODE_ID="${{ secrets.FINERACT_NODE_ID }}" \
