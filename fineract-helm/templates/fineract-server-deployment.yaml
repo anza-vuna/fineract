@@ -116,6 +116,8 @@ spec:
               value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_PWD }}"
             - name: FINERACT_DEFAULT_TENANTDB_RO_NAME
               value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_NAME }}"
+            - name: FINERACT_DEFAULT_TENANTDB_RO_CONN_PARAMS
+              value: "{{ .Values.fineract.env.FINERACT_DEFAULT_TENANTDB_CONN_PARAMS }}"
             - name: "FINERACT_SECURITY_BASICAUTH_ENABLED"
               value: 'true'
             - name: "FINERACT_SECURITY_OAUTH_ENABLED"
