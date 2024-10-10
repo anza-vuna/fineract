@@ -33,7 +33,7 @@ spec:
       targetPort: {{ .Values.fineract.env.FINERACT_SERVER_PORT }}
   selector:
     app: fineract-server
-#    tier: backend
+    tier: backend
   type: NodePort
 #  loadBalancerIP: 34.45.178.100
 ---
