@@ -304,7 +304,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: myapp-cert
-  namespace: default
+  namespace: paymenthub-ns
 spec:
   secretName: finercat-dev-tls-secret
   issuerRef:
