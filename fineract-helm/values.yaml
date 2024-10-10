@@ -26,6 +26,7 @@ fineract:
   preStopScript: 'echo -e "******Fineract is stopping********";'
   ingress:
     enabled: true
+    hostname: "api.vuna.io"
     path: "/fineract-provider"
     annotations:
       ingressClassName: "nginx"
