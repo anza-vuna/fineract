@@ -15,7 +15,7 @@ info:
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 servers:
   - url: /fineract-provider/api
-  - url: https://demo.fineract.dev/fineract-provider/api/v1
+  - url: https://api.vuna.io/fineract-provider/api
 components:
   securitySchemes:
     basicAuth:
