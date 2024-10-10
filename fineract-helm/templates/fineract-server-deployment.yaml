@@ -21,7 +21,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: fineract-server
+    app: fineract-server-srv
   name: fineract-server-srv
 #  annotations:
 #    cloud.google.com/neg: '{"ingress": true}'
@@ -205,7 +205,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: fineract-server
+                name: fineract-server-srv
                 port: 
                   number: {{ .Values.fineract.env.CONTAINER_PORT }}
 {{- end }}
