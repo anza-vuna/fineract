@@ -198,6 +198,7 @@ metadata:
 spec:
   rules:
     - host: "{{ .Values.fineract.ingress.hostname }}"
+      secretName: finercat-dev-tls-secret
       http:
         paths:
           - path: "{{ .Values.fineract.ingress.path }}"
@@ -281,5 +282,36 @@ subsets:
       - ip: 10.0.1.229
     ports:
       - port: 3306
+
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-dev
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: alex@vuna.io
+    privateKeySecretRef:
+      name: letsencrypt-dev-private-key
+    solvers:
+      - http01:
+          ingress:
+            class: nginx
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: myapp-cert
+  namespace: default
+spec:
+  secretName: finercat-dev-tls-secret
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: api.vuna.io
+  dnsNames:
+    - api.vuna.io
 
 {{- end }}
