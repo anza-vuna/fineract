@@ -303,12 +303,12 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: myapp-cert
+  name: fineract-cert
   namespace: paymenthub-ns
 spec:
   secretName: finercat-dev-tls-secret
   issuerRef:
-    name: letsencrypt-prod
+    name: letsencrypt-dev
     kind: ClusterIssuer
   commonName: api.vuna.io
   dnsNames:
