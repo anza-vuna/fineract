@@ -29,8 +29,8 @@ fineract:
     hostname: "api.vuna.io"
     path: "/fineract-provider"
     annotations:
-      ingressClassName: "nginx"
-      cert-manager.io/cluster-issuer: "letsencrypt-dev"
+      ingressClassName: nginx
+      cert-manager.io/cluster-issuer: letsencrypt-dev
   resources:
     limits:
       cpu: "1500m"
