@@ -311,7 +311,7 @@ spec:
     solvers:
       - http01:
           ingress:
-            class: public
+            class: nginx
 
 ---
 apiVersion: cert-manager.io/v1
