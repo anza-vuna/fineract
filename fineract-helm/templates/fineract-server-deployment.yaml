@@ -311,7 +311,7 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-dev-private-key
     solvers:
-      - http01:
+      - dns01:
           ingress:
             class: nginx
 
