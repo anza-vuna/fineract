@@ -29,7 +29,7 @@ fineract:
     hostname: "api.vuna.io"
     path: "/fineract-provider"
     annotations:
-      kubernetes.io/ingress.class: nginx
+      ingressClassName: nginx
       cert-manager.io/cluster-issuer: letsencrypt-dev
   resources:
     limits:
