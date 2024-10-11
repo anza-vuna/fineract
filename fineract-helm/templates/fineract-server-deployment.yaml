@@ -206,11 +206,11 @@ spec:
   - host: "{{ .Values.fineract.ingress.hostname }}"
     http:
       paths:
-#        - path: /.well-known/acme-challenge/*
-#          pathType: Prefix
-#          backend:
-#            service:
-#              name: cm-acme-http-solver-zjvld  # Service for HTTP traffic
+        - path: /.well-known/acme-challenge/*
+          pathType: Prefix
+          backend:
+            service:
+              name: cm-acme-http-solver-zjvld  # Service for HTTP traffic
 #              port:
 #                number: 80
         - path: "{{ .Values.fineract.ingress.path }}"
