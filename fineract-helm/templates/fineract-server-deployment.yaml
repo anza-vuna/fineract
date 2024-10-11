@@ -196,9 +196,11 @@ metadata:
 {{ toYaml .Values.fineract.ingress.annotations | indent 4 }}
 {{- end }}
 spec:
-  rules:
-    - host: "{{ .Values.fineract.ingress.hostname }}"
+  tls:
+    - hosts: "{{ .Values.fineract.ingress.hostname }}"
       secretName: finercat-dev-tls-secret
+      rules:
+    - host: "{{ .Values.fineract.ingress.hostname }}"
       http:
         paths:
           - path: "{{ .Values.fineract.ingress.path }}"
