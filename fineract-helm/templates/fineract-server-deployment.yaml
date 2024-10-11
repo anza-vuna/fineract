@@ -208,7 +208,7 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: cm-acme-http-solver-f8mfm  # Service for HTTP traffic
+              name: cm-acme-http-solver-vvkvf  # Service for HTTP traffic
               port:
                 number: 80
         - path: "{{ .Values.fineract.ingress.path }}"
