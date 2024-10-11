@@ -31,9 +31,9 @@ fineract:
     annotations:
       ingressClassName: nginx
       cert-manager.io/cluster-issuer: "letsencrypt-dev"
-      acme.cert-manager.io/http01-edit-in-place: "true"
-      nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0,::/0
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+#      acme.cert-manager.io/http01-edit-in-place: "true"
+#      nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0,::/0
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   resources:
     limits:
       cpu: "1500m"
