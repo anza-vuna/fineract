@@ -203,10 +203,10 @@ spec:
         - path: /http
           pathType: Prefix
           backend:
-          ervice:
-          name: fineract-server-srv  # Service for HTTP traffic
-          port:
-            number: 80
+            service:
+              name: fineract-server-srv  # Service for HTTP traffic
+              port:
+                number: 80
         - path: "{{ .Values.fineract.ingress.path }}"
           pathType: Prefix
           backend:
