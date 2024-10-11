@@ -32,7 +32,7 @@ spec:
       port: {{ .Values.fineract.env.CONTAINER_PORT }}
       targetPort: {{ .Values.fineract.env.FINERACT_SERVER_PORT }}
       nodePort: 30944
-    - name: http
+    - name: 80-8089
       protocol: TCP
       port: 80
       targetPort: 8089
@@ -41,7 +41,7 @@ spec:
     app: fineract-server
     tier: backend
   type: NodePort
-#  loadBalancerIP: 34.45.178.100
+  loadBalancerIP: 140.238.98.195
 ---
 apiVersion: apps/v1
 kind: Deployment
