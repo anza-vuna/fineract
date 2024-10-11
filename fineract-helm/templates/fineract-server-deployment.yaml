@@ -196,20 +196,21 @@ metadata:
 {{ toYaml .Values.fineract.ingress.annotations | indent 4 }}
 {{- end }}
 spec:
+  rules:
+  - host: "{{ .Values.fineract.ingress.hostname }}"
+    http:
+      paths:
+        - path: "{{ .Values.fineract.ingress.path }}"
+          pathType: Prefix
+          backend:
+            service:
+              name: fineract-server-srv
+              port:
+                number: {{ .Values.fineract.env.CONTAINER_PORT }}
   tls:
-    - hosts: "{{ .Values.fineract.ingress.hostname }}"
+    - hosts:
+      - api.vuna.io
       secretName: finercat-dev-tls-secret
-      rules:
-    - host: "{{ .Values.fineract.ingress.hostname }}"
-      http:
-        paths:
-          - path: "{{ .Values.fineract.ingress.path }}"
-            pathType: Prefix
-            backend:
-              service:
-                name: fineract-server-srv
-                port: 
-                  number: {{ .Values.fineract.env.CONTAINER_PORT }}
 {{- end }}
 ---
 apiVersion: v1
