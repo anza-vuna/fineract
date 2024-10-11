@@ -41,7 +41,7 @@ spec:
     app: fineract-server
     tier: backend
   type: NodePort
-  loadBalancerIP: 140.238.98.195
+#  loadBalancerIP: 140.238.98.195
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -221,10 +221,10 @@ spec:
               name: fineract-server-srv
               port:
                 number: {{ .Values.fineract.env.CONTAINER_PORT }}
-  tls:
-    - hosts:
-      - api.vuna.io
-      secretName: finercat-dev-tls-secret
+#  tls:
+#    - hosts:
+#      - api.vuna.io
+#      secretName: finercat-dev-tls-secret
 {{- end }}
 ---
 apiVersion: v1
@@ -300,36 +300,36 @@ subsets:
     ports:
       - port: 3306
 
----
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: letsencrypt-dev
-spec:
-  acme:
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: alex@vuna.io
-    privateKeySecretRef:
-      name: letsencrypt-dev-private-key
-    solvers:
-      - http01:
-          ingress:
-            ingressClassName: nginx
-
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: fineract-cert
-  namespace: paymenthub-ns
-spec:
-  secretName: finercat-dev-tls-secret
-  issuerRef:
-    name: letsencrypt-dev
-    kind: ClusterIssuer
-  commonName: api.vuna.io
-  dnsNames:
-    - api.vuna.io
+#---
+#apiVersion: cert-manager.io/v1
+#kind: ClusterIssuer
+#metadata:
+#  name: letsencrypt-dev
+#spec:
+#  acme:
+#    server: https://acme-staging-v02.api.letsencrypt.org/directory
+#    email: alex@vuna.io
+#    privateKeySecretRef:
+#      name: letsencrypt-dev-private-key
+#    solvers:
+#      - http01:
+#          ingress:
+#            ingressClassName: nginx
+#
+#---
+#apiVersion: cert-manager.io/v1
+#kind: Certificate
+#metadata:
+#  name: fineract-cert
+#  namespace: paymenthub-ns
+#spec:
+#  secretName: finercat-dev-tls-secret
+#  issuerRef:
+#    name: letsencrypt-dev
+#    kind: ClusterIssuer
+#  commonName: api.vuna.io
+#  dnsNames:
+#    - api.vuna.io
 
 #---
 #apiVersion: networking.k8s.io/v1
