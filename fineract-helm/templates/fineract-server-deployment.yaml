@@ -221,10 +221,10 @@ spec:
               name: fineract-server-srv
               port:
                 number: {{ .Values.fineract.env.CONTAINER_PORT }}
-  tls:
-    - hosts:
-      - api.vuna.io
-      secretName: finercat-dev-tls-secret
+#  tls:
+#    - hosts:
+#      - api.vuna.io
+#      secretName: finercat-dev-tls-secret
 {{- end }}
 ---
 apiVersion: v1
