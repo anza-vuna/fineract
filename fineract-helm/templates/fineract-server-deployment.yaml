@@ -27,11 +27,11 @@ metadata:
 #    cloud.google.com/neg: '{"ingress": true}'
 spec:
   ports:
-#    - name: 443-8080
-#      protocol: TCP
-#      port: {{ .Values.fineract.env.CONTAINER_PORT }}
-#      targetPort: {{ .Values.fineract.env.FINERACT_SERVER_PORT }}
-#      nodePort: 30944
+    - name: 443-8080
+      protocol: TCP
+      port: {{ .Values.fineract.env.CONTAINER_PORT }}
+      targetPort: {{ .Values.fineract.env.FINERACT_SERVER_PORT }}
+      nodePort: 30944
     - name: 80-8089
       protocol: TCP
       port: 80
@@ -214,17 +214,17 @@ spec:
               name: cm-acme-http-solver-tw5cg  # Service for HTTP traffic
               port:
                 number: 8089
-#        - path: "{{ .Values.fineract.ingress.path }}"
-#          pathType: Prefix
-#          backend:
-#            service:
-#              name: fineract-server-srv
-#              port:
-#                number: {{ .Values.fineract.env.CONTAINER_PORT }}
-#  tls:
-#    - hosts:
-#      - api.vuna.io
-#      secretName: finercat-dev-tls-secret
+        - path: "{{ .Values.fineract.ingress.path }}"
+          pathType: Prefix
+          backend:
+            service:
+              name: fineract-server-srv
+              port:
+                number: {{ .Values.fineract.env.CONTAINER_PORT }}
+  tls:
+    - hosts:
+      - api.vuna.io
+      secretName: finercat-dev-tls-secret
 {{- end }}
 ---
 apiVersion: v1
