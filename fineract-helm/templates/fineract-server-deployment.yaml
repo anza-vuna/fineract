@@ -206,13 +206,13 @@ spec:
   - host: "{{ .Values.fineract.ingress.hostname }}"
     http:
       paths:
-        - path: /.well-known/acme-challenge/
-          pathType: Prefix
-          backend:
-            service:
-              name: cm-acme-http-solver-tw5cg  # Service for HTTP traffic
-              port:
-                number: 8090
+#        - path: /.well-known/acme-challenge/
+#          pathType: Prefix
+#          backend:
+#            service:
+#              name: cm-acme-http-solver-tw5cg  # Service for HTTP traffic
+#              port:
+#                number: 8090
         - path: "{{ .Values.fineract.ingress.path }}"
           pathType: Prefix
           backend:
