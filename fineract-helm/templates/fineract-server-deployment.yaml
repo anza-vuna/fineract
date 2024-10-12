@@ -221,10 +221,10 @@ spec:
               name: fineract-server-srv
               port:
                 number: {{ .Values.fineract.env.CONTAINER_PORT }}
-#  tls:
-#    - hosts:
-#      - api.vuna.io
-#      secretName: finercat-dev-tls-secret
+  tls:
+    - hosts:
+      - api.vuna.io
+      secretName: finercat-dev-tls-secret
 {{- end }}
 ---
 apiVersion: v1
@@ -307,7 +307,8 @@ metadata:
   name: letsencrypt-dev
 spec:
   acme:
-    server: https://acme-v02.api.letsencrypt.org/directory  # Use staging for testing
+#    server: https://acme-v02.api.letsencrypt.org/directory  #prod environment
+    server: https://acme-staging-v02.api.letsencrypt.org/directory # Use staging for testing
     email: alex@vuna.io  # Replace with your email
     privateKeySecretRef:
       name: letsencrypt-dev
