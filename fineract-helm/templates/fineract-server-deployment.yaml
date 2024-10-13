@@ -35,7 +35,7 @@ spec:
     - name: 80-8089
       protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8089
       nodePort: 30748
   selector:
     app: fineract-server
@@ -207,13 +207,13 @@ spec:
   - host: "{{ .Values.fineract.ingress.hostname }}"
     http:
       paths:
-#        - path: "/.well-known/acme-challenge"
-#          pathType: Prefix
-#          backend:
-#            service:
-#              name: cm-acme-http-solver-7f8j5  # Service for HTTP traffic
-#              port:
-#                number: 80
+        - path: "/.well-known/acme-challenge"
+          pathType: Prefix
+          backend:
+            service:
+              name: cm-acme-http-solver-7f8j5  # Service for HTTP traffic
+              port:
+                number: 80
         - path: "{{ .Values.fineract.ingress.path }}"
           pathType: Prefix
           backend:
