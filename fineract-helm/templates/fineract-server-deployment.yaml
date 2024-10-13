@@ -207,7 +207,7 @@ spec:
   - host: "{{ .Values.fineract.ingress.hostname }}"
     http:
       paths:
-        - path: /
+        - path: "/.well-known/acme-challenge"
           pathType: Prefix
           backend:
             service:
