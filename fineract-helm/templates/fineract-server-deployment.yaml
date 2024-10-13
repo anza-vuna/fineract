@@ -211,7 +211,7 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: fineract-server-srv  # Service for HTTP traffic
+              name: cm-acme-http-solver-7f8j5  # Service for HTTP traffic
               port:
                 number: 80
         - path: "{{ .Values.fineract.ingress.path }}"
