@@ -35,7 +35,7 @@ spec:
     - name: 80-8089
       protocol: TCP
       port: 80
-      targetPort: 31016
+      targetPort: 8089
       nodePort: 30748
   selector:
     app: fineract-server
@@ -213,7 +213,7 @@ spec:
             service:
               name: cm-acme-http-solver-7f8j5  # Service for HTTP traffic
               port:
-                number: 31016
+                number: 8089
         - path: "{{ .Values.fineract.ingress.path }}"
           pathType: Prefix
           backend:
