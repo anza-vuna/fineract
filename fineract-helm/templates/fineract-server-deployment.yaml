@@ -213,7 +213,7 @@ spec:
             service:
               name: cm-acme-http-solver-7f8j5  # Service for HTTP traffic
               port:
-                number: 80
+                number: 8089
         - path: "{{ .Values.fineract.ingress.path }}"
           pathType: Prefix
           backend:
