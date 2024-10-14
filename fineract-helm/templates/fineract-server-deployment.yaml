@@ -207,13 +207,13 @@ spec:
   - host: "{{ .Values.fineract.ingress.hostname }}"
     http:
       paths:
-        - path: /.well-known/acme-challenge
-          pathType: Prefix
-          backend:
-            service:
-              name: cm-acme-http-solver # Ensure this service is the correct one
-              port:
-                number: 8089
+#        - path: /.well-known/acme-challenge
+#          pathType: Prefix
+#          backend:
+#            service:
+#              name: cm-acme-http-solver # Ensure this service is the correct one
+#              port:
+#                number: 8089
 #        - path: /
 #          pathType: Prefix
 #          backend:
@@ -221,13 +221,13 @@ spec:
 #              name: nginx-service  # Service for HTTP traffic
 #              port:
 #                number: 80
-#        - path: "{{ .Values.fineract.ingress.path }}"
-#          pathType: Prefix
-#          backend:
-#            service:
-#              name: fineract-server-srv
-#              port:
-#                number: {{ .Values.fineract.env.CONTAINER_PORT }}
+        - path: "{{ .Values.fineract.ingress.path }}"
+          pathType: Prefix
+          backend:
+            service:
+              name: fineract-server-srv
+              port:
+                number: {{ .Values.fineract.env.CONTAINER_PORT }}
   tls:
     - hosts:
       - api.vuna.io
