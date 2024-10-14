@@ -76,13 +76,13 @@ spec:
           livenessProbe:
             httpGet:
               path: /fineract-provider/actuator/health/liveness
-              port: 8080
+              port: 443
             initialDelaySeconds: 720
             periodSeconds: 1
           readinessProbe:
             httpGet:
               path: /fineract-provider/actuator/health/readiness
-              port: 8080
+              port: 443
             initialDelaySeconds: 360
             periodSeconds: 1
           env:
@@ -307,22 +307,22 @@ subsets:
     ports:
       - port: 3306
 
----
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: letsencrypt-dev
-spec:
-  acme:
-#    server: https://acme-v02.api.letsencrypt.org/directory  #prod environment
-    server: https://acme-staging-v02.api.letsencrypt.org/directory # Use staging for testing
-    email: alex@vuna.io  # Replace with your email
-    privateKeySecretRef:
-      name: letsencrypt-dev
-    solvers:
-      - http01:
-          ingress:
-            class: nginx  # Ensure this matches your Ingress class
+#---
+#apiVersion: cert-manager.io/v1
+#kind: ClusterIssuer
+#metadata:
+#  name: letsencrypt-dev
+#spec:
+#  acme:
+##    server: https://acme-v02.api.letsencrypt.org/directory  #prod environment
+#    server: https://acme-staging-v02.api.letsencrypt.org/directory # Use staging for testing
+#    email: alex@vuna.io  # Replace with your email
+#    privateKeySecretRef:
+#      name: letsencrypt-dev
+#    solvers:
+#      - http01:
+#          ingress:
+#            class: nginx  # Ensure this matches your Ingress class
 
 #---
 #apiVersion: cert-manager.io/v1
