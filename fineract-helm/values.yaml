@@ -25,7 +25,7 @@ fineract:
     FINERACT_DEFAULT_TENANTDB_CONN_PARAMS: ""
   preStopScript: 'echo -e "******Fineract is stopping********";'
   ingress:
-    enabled: true
+    enabled: false
     hostname: api.vuna.io
     path: "/fineract-provider"
     annotations:
