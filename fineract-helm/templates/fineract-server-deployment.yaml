@@ -40,7 +40,7 @@ spec:
   selector:
     app: fineract-server
     tier: backend
-  type: NodePort
+  type: ClusterIP
 #  loadBalancerIP: 140.238.98.195
 ---
 apiVersion: apps/v1
