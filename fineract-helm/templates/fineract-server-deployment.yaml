@@ -32,11 +32,11 @@ spec:
       port: {{ .Values.fineract.env.CONTAINER_PORT }}
       targetPort: {{ .Values.fineract.env.FINERACT_SERVER_PORT }}
       nodePort: 30944
-#    - name: 80-8089
-#      protocol: TCP
-#      port: 80
-#      targetPort: 8089
-#      nodePort: 30748
+    - name: 80-8089
+      protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30748
   selector:
     app: fineract-server
     tier: backend
