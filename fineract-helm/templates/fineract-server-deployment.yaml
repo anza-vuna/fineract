@@ -41,7 +41,7 @@ spec:
     app: fineract-server
     tier: backend
   type: NodePort
-#  loadBalancerIP: 140.238.98.195
+  loadBalancerIP: 140.238.98.195
 ---
 apiVersion: apps/v1
 kind: Deployment
