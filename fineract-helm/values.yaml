@@ -33,7 +33,6 @@ fineract:
       cert-manager.io/cluster-issuer: "letsencrypt-dev"
       acme.cert-manager.io/http01-edit-in-place: "true"
       nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0,::/0
-#      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/ssl-protocols: "TLSv1.2 TLSv1.3"
   resources:
     limits:
