@@ -214,13 +214,13 @@ spec:
               name: nginx-service # Ensure this service is the correct one
               port:
                 number: 80
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: nginx-service  # Service for HTTP traffic
-              port:
-                number: 80
+#        - path: /
+#          pathType: Prefix
+#          backend:
+#            service:
+#              name: nginx-service  # Service for HTTP traffic
+#              port:
+#                number: 80
 #        - path: "{{ .Values.fineract.ingress.path }}"
 #          pathType: Prefix
 #          backend:
