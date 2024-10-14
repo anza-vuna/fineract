@@ -207,20 +207,20 @@ spec:
   - host: "{{ .Values.fineract.ingress.hostname }}"
     http:
       paths:
-#        - path: "/.well-known/acme-challenge"
-#          pathType: Prefix
-#          backend:
-#            service:
-#              name: cm-acme-http-solver-dvlf9  # Service for HTTP traffic
-#              port:
-#                number: 8089
-        - path: "{{ .Values.fineract.ingress.path }}"
+        - path: /
           pathType: Prefix
           backend:
             service:
-              name: fineract-server-srv
+              name: nginx-service  # Service for HTTP traffic
               port:
-                number: {{ .Values.fineract.env.CONTAINER_PORT }}
+                number: 80
+#        - path: "{{ .Values.fineract.ingress.path }}"
+#          pathType: Prefix
+#          backend:
+#            service:
+#              name: fineract-server-srv
+#              port:
+#                number: {{ .Values.fineract.env.CONTAINER_PORT }}
 #  tls:
 #    - hosts:
 #      - api.vuna.io
