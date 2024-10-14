@@ -207,6 +207,13 @@ spec:
   - host: "{{ .Values.fineract.ingress.hostname }}"
     http:
       paths:
+        - path: /.well-known/acme-challenge/
+          pathType: Prefix
+          backend:
+            service:
+              name: cm-acme-http-solver-prm9v  # Ensure this service is the correct one
+              port:
+                number: 80
         - path: /
           pathType: Prefix
           backend:
