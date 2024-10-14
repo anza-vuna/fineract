@@ -202,7 +202,7 @@ metadata:
 {{ toYaml .Values.fineract.ingress.annotations | indent 4 }}
 {{- end }}
 spec:
-  ingressClassName: nginx
+#  ingressClassName: nginx
   rules:
   - host: "{{ .Values.fineract.ingress.hostname }}"
     http:
@@ -214,13 +214,13 @@ spec:
 #              name: cm-acme-http-solver # Ensure this service is the correct one
 #              port:
 #                number: 8089
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: nginx-service  # Service for HTTP traffic
-              port:
-                number: 80
+#        - path: /
+#          pathType: Prefix
+#          backend:
+#            service:
+#              name: nginx-service  # Service for HTTP traffic
+#              port:
+#                number: 80
         - path: "{{ .Values.fineract.ingress.path }}"
           pathType: Prefix
           backend:
@@ -228,10 +228,10 @@ spec:
               name: fineract-server-srv
               port:
                 number: {{ .Values.fineract.env.CONTAINER_PORT }}
-#  tls:
-#    - hosts:
-#      - api.vuna.io
-#      secretName: finercat-dev-tls-secret
+  tls:
+    - hosts:
+      - api.vuna.io
+      secretName: finercat-dev-tls-secret
 {{- end }}
 ---
 apiVersion: v1
@@ -307,23 +307,23 @@ subsets:
     ports:
       - port: 3306
 
-#---
-#apiVersion: cert-manager.io/v1
-#kind: ClusterIssuer
-#metadata:
-#  name: letsencrypt-dev
-#spec:
-#  acme:
-##    server: https://acme-v02.api.letsencrypt.org/directory  #prod environment
-#    server: https://acme-staging-v02.api.letsencrypt.org/directory # Use staging for testing
-#    email: alex@vuna.io  # Replace with your email
-#    privateKeySecretRef:
-#      name: letsencrypt-dev
-#    solvers:
-#      - http01:
-#          ingress:
-#            class: nginx  # Ensure this matches your Ingress class
-#
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-dev
+spec:
+  acme:
+#    server: https://acme-v02.api.letsencrypt.org/directory  #prod environment
+    server: https://acme-staging-v02.api.letsencrypt.org/directory # Use staging for testing
+    email: alex@vuna.io  # Replace with your email
+    privateKeySecretRef:
+      name: letsencrypt-dev
+    solvers:
+      - http01:
+          ingress:
+            class: nginx  # Ensure this matches your Ingress class
+
 #---
 #apiVersion: cert-manager.io/v1
 #kind: Certificate
