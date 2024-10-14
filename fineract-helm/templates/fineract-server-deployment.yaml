@@ -21,8 +21,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: fineract-server-srv
-  name: fineract-server-srv
+    app: fineract-server-src
+  name: fineract-server-src
 #  annotations:
 #    cloud.google.com/neg: '{"ingress": true}'
 spec:
@@ -35,7 +35,7 @@ spec:
     - name: 80-8089
       protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8089
       nodePort: 30748
   selector:
     app: fineract-server
@@ -225,7 +225,7 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: fineract-server-srv
+              name: fineract-server-src
               port:
                 number: {{ .Values.fineract.env.CONTAINER_PORT }}
   tls:
