@@ -207,6 +207,13 @@ spec:
   - host: "{{ .Values.fineract.ingress.hostname }}"
     http:
       paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: nginx-service
+              port:
+                number: 80
         - path: "{{ .Values.fineract.ingress.path }}"
           pathType: Prefix
           backend:
@@ -313,21 +320,21 @@ spec:
       - http01:
           ingress:
             class: nginx  # Ensure this matches your Ingress class
-#
-#---
-#apiVersion: cert-manager.io/v1
-#kind: Certificate
-#metadata:
-#  name: fineract-cert
-#  namespace: paymenthub-ns
-#spec:
-#  secretName: fineract-dev-tls-secret  # Ensure the secret name is correct
-#  issuerRef:
-#    name: letsencrypt-issuer  # Ensure this matches your ClusterIssuer name
-#    kind: ClusterIssuer
-#  commonName: api.vuna.io
-#  dnsNames:
-#    - api.vuna.io
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: fineract-cert
+  namespace: paymenthub-ns
+spec:
+  secretName: fineract-dev-tls-secret  # Ensure the secret name is correct
+  issuerRef:
+    name: letsencrypt-issuer  # Ensure this matches your ClusterIssuer name
+    kind: ClusterIssuer
+  commonName: api.vuna.io
+  dnsNames:
+    - api.vuna.io
 
 #---
 #apiVersion: networking.k8s.io/v1
