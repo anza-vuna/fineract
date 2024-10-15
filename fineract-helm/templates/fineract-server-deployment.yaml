@@ -314,8 +314,8 @@ metadata:
   name: letsencrypt-dev
 spec:
   acme:
-#    server: https://acme-v02.api.letsencrypt.org/directory  #prod environment
-    server: https://acme-staging-v02.api.letsencrypt.org/directory # Use staging for testing
+    server: https://acme-v02.api.letsencrypt.org/directory  #prod environment
+#    server: https://acme-staging-v02.api.letsencrypt.org/directory # Use staging for testing
     email: alex@vuna.io  # Replace with your email
     privateKeySecretRef:
       name: letsencrypt-dev
