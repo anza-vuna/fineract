@@ -207,13 +207,13 @@ spec:
   - host: "{{ .Values.fineract.ingress.hostname }}"
     http:
       paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: nginx-service
-              port:
-                number: 80
+#        - path: /
+#          pathType: Prefix
+#          backend:
+#            service:
+#              name: nginx-service
+#              port:
+#                number: 80
         - path: "{{ .Values.fineract.ingress.path }}"
           pathType: Prefix
           backend:
