@@ -312,10 +312,10 @@ spec:
     email: alex@vuna.io  # Replace with your email
     privateKeySecretRef:
       name: letsencrypt-issuer-key
-  dnsConfig:
-    namecheap:
-      apiKey: "6f5de4dd0e7d4064a25b2a156455811f"
-      username: "kimaniderrick"
+#  dnsConfig:
+#    namecheap:
+#      apiKey: "6f5de4dd0e7d4064a25b2a156455811f"
+#      username: "kimaniderrick"
     solvers:
       - http01:
           ingress:
