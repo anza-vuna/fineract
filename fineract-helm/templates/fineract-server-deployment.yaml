@@ -258,11 +258,11 @@ data:
     GRANT ALL ON *.* TO 'root'@'%';
     GRANT ALL PRIVILEGES ON `fineract_tenants`.* TO 'mifos';
     GRANT ALL PRIVILEGES ON `fineract_default`.* TO 'mifos';
-#---
+---
 #apiVersion: networking.gke.io/v1
 #kind: ManagedCertificate
 #metadata:
-#  name: fin-managed-ssl-certificate-dbfb2e8d
+#  name: fin-managed-ssl-certificate
 ##  namespace: paymenthub-back-end
 #spec:
 # domains:
@@ -307,22 +307,26 @@ subsets:
     ports:
       - port: 3306
 
-#---
-#apiVersion: cert-manager.io/v1
-#kind: ClusterIssuer
-#metadata:
-#  name: letsencrypt-dev
-#spec:
-#  acme:
-##    server: https://acme-v02.api.letsencrypt.org/directory  #prod environment
-#    server: https://acme-staging-v02.api.letsencrypt.org/directory # Use staging for testing
-#    email: alex@vuna.io  # Replace with your email
-#    privateKeySecretRef:
-#      name: letsencrypt-dev
-#    solvers:
-#      - http01:
-#          ingress:
-#            class: nginx  # Ensure this matches your Ingress class
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-dev
+spec:
+  acme:
+#    server: https://acme-v02.api.letsencrypt.org/directory  #prod environment
+    server: https://acme-staging-v02.api.letsencrypt.org/directory # Use staging for testing
+    email: alex@vuna.io  # Replace with your email
+    privateKeySecretRef:
+      name: letsencrypt-dev
+  dnsConfig:
+    namecheap:
+      apiKey: "6f5de4dd0e7d4064a25b2a156455811f"
+      username: "kimaniderrick"
+    solvers:
+      - http01:
+          ingress:
+            class: nginx  # Ensure this matches your Ingress class
 
 #---
 #apiVersion: cert-manager.io/v1
