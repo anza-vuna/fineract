@@ -129,7 +129,7 @@ spec:
             - name: "FINERACT_SECURITY_OAUTH_ENABLED"
               value: 'false'
           ports:
-            - containerPort: {{ .Values.fineract.env.CONTAINER_PORT }}
+            - containerPort: {{ .Values.fineract.env.FINERACT_SERVER_PORT }}
               name: fineract-server
           lifecycle:
             preStop:
