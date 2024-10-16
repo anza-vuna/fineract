@@ -130,7 +130,7 @@ spec:
               value: 'false'
           ports:
             - containerPort: {{ .Values.fineract.env.CONTAINER_PORT }}
-#              name: fineract-server
+              name: fineract-server
           lifecycle:
             preStop:
               exec:
