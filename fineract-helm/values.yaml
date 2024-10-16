@@ -34,6 +34,10 @@ fineract:
       acme.cert-manager.io/http01-edit-in-place: "true"
       nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0,::/0
       nginx.ingress.kubernetes.io/ssl-protocols: "TLSv1.2 TLSv1.3"
+      ingress.kubernetes.io/proxy-body-size: "0"
+      ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
   resources:
     limits:
       cpu: "1500m"
