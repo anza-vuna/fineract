@@ -31,7 +31,7 @@ spec:
       protocol: TCP
       port: {{ .Values.fineract.env.CONTAINER_PORT }}
       targetPort: {{ .Values.fineract.env.FINERACT_SERVER_PORT }}
-#      nodePort: 30944
+      nodePort: 30944
 #    - name: 80-8089
 #      protocol: TCP
 #      port: 80
@@ -40,7 +40,7 @@ spec:
   selector:
     app.kubernetes.io/name: fineract-server
 #    tier: backend
-  type: LoadBalancer
+  type: NodePort
 #  loadBalancerIP: 140.238.98.195
 ---
 apiVersion: apps/v1
