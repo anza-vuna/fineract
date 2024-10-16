@@ -31,7 +31,7 @@ spec:
       protocol: TCP
       port: {{ .Values.fineract.env.CONTAINER_PORT }}
       targetPort: {{ .Values.fineract.env.FINERACT_SERVER_PORT }}
-      nodePort: 30944
+#      nodePort: 30944
 #    - name: 80-8089
 #      protocol: TCP
 #      port: 80
@@ -128,9 +128,9 @@ spec:
               value: 'true'
             - name: "FINERACT_SECURITY_OAUTH_ENABLED"
               value: 'false'
-#          ports:
-#            - containerPort: {{ .Values.fineract.env.CONTAINER_PORT }}
-#              name: fineract-server
+          ports:
+            - containerPort: {{ .Values.fineract.env.CONTAINER_PORT }}
+              name: fineract-server
           lifecycle:
             preStop:
               exec:
