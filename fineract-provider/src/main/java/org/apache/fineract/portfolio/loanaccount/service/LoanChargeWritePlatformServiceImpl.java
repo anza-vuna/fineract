@@ -31,6 +31,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -209,29 +210,34 @@ public class LoanChargeWritePlatformServiceImpl implements LoanChargeWritePlatfo
         boolean isAppliedOnBackDate = false;
         LoanCharge loanCharge = null;
         LocalDate recalculateFrom = loan.fetchInterestRecalculateFromDate();
+        LocalDate transactionDate = null;
         if (chargeDefinition.isPercentageOfDisbursementAmount()) {
             LoanTrancheDisbursementCharge loanTrancheDisbursementCharge;
             ExternalId externalId = externalIdFactory.createFromCommand(command, "externalId");
-            boolean needToGenerateNewExternalId = false;
+            boolean isFirst = true;
             for (LoanDisbursementDetails disbursementDetail : loanDisburseDetails) {
                 if (disbursementDetail.actualDisbursementDate() == null) {
                     // If multiple charges to be applied, only the first one will get the provided externalId, for the
                     // rest we generate new ones (if needed)
-                    if (needToGenerateNewExternalId) {
+                    if (!isFirst) {
                         externalId = externalIdFactory.create();
                     }
+                    LocalDate dueDate = disbursementDetail.expectedDisbursementDateAsLocalDate();
                     loanCharge = loanChargeAssembler.createNewWithoutLoan(chargeDefinition, disbursementDetail.principal(), null, null,
-                            null, disbursementDetail.expectedDisbursementDateAsLocalDate(), null, null, externalId);
+                            null, dueDate, null, null, externalId);
                     loanTrancheDisbursementCharge = new LoanTrancheDisbursementCharge(loanCharge, disbursementDetail);
                     loanCharge.updateLoanTrancheDisbursementCharge(loanTrancheDisbursementCharge);
                     businessEventNotifierService.notifyPreBusinessEvent(new LoanAddChargeBusinessEvent(loanCharge));
                     validateAddLoanCharge(loan, chargeDefinition, loanCharge);
                     addCharge(loan, chargeDefinition, loanCharge);
                     isAppliedOnBackDate = true;
-                    if (DateUtils.isAfter(recalculateFrom, disbursementDetail.expectedDisbursementDateAsLocalDate())) {
-                        recalculateFrom = disbursementDetail.expectedDisbursementDateAsLocalDate();
+                    if (DateUtils.isAfter(recalculateFrom, dueDate)) {
+                        recalculateFrom = dueDate;
                     }
-                    needToGenerateNewExternalId = true;
+                    if (isFirst) {
+                        transactionDate = loanCharge.getEffectiveDueDate();
+                    }
+                    isFirst = false;
                 }
             }
             if (loanCharge == null) {
@@ -246,35 +252,38 @@ public class LoanChargeWritePlatformServiceImpl implements LoanChargeWritePlatfo
 
             validateAddLoanCharge(loan, chargeDefinition, loanCharge);
             isAppliedOnBackDate = addCharge(loan, chargeDefinition, loanCharge);
-            if (loanCharge.getDueLocalDate() == null || DateUtils.isAfter(recalculateFrom, loanCharge.getDueLocalDate())) {
+            if (DateUtils.isAfter(recalculateFrom, loanCharge.getDueLocalDate())) {
                 isAppliedOnBackDate = true;
                 recalculateFrom = loanCharge.getDueLocalDate();
             }
+            transactionDate = loanCharge.getEffectiveDueDate();
         }
 
         boolean reprocessRequired = true;
-        if (loan.repaymentScheduleDetail().isInterestRecalculationEnabled()) {
+        // overpaid transactions will be reprocessed and pay this charge
+        boolean overpaidReprocess = !loanCharge.isDueAtDisbursement() && !loanCharge.isPaid() && loan.getStatus().isOverpaid();
+        if (!overpaidReprocess && loan.repaymentScheduleDetail().isInterestRecalculationEnabled()) {
             if (isAppliedOnBackDate && loan.isFeeCompoundingEnabledForInterestRecalculation()) {
-
                 loan = runScheduleRecalculation(loan, recalculateFrom);
                 reprocessRequired = false;
             }
             this.loanWritePlatformService.updateOriginalSchedule(loan);
         }
-        // [For Adv payment allocation strategy] check if charge due date is earlier than last transaction
-        // date, if yes trigger reprocess else no reprocessing
-        if (AdvancedPaymentScheduleTransactionProcessor.ADVANCED_PAYMENT_ALLOCATION_STRATEGY.equals(loan.transactionProcessingStrategy())) {
+        if (!overpaidReprocess && AdvancedPaymentScheduleTransactionProcessor.ADVANCED_PAYMENT_ALLOCATION_STRATEGY
+                .equals(loan.transactionProcessingStrategy())) {
+            // [For Adv payment allocation strategy] check if charge due date is earlier than last transaction
+            // date, if yes trigger reprocess else no reprocessing
             LoanTransaction lastPaymentTransaction = loan.getLastTransactionForReprocessing();
-            if (lastPaymentTransaction != null) {
-                if (loanCharge.getEffectiveDueDate() != null
-                        && DateUtils.isAfter(loanCharge.getEffectiveDueDate(), lastPaymentTransaction.getTransactionDate())) {
-                    reprocessRequired = false;
-                }
+            if (lastPaymentTransaction != null
+                    && DateUtils.isAfter(loanCharge.getEffectiveDueDate(), lastPaymentTransaction.getTransactionDate())) {
+                reprocessRequired = false;
             }
         }
 
         if (reprocessRequired) {
-            ChangedTransactionDetail changedTransactionDetail = loan.reprocessTransactions();
+            ChangedTransactionDetail changedTransactionDetail = overpaidReprocess
+                    ? loan.reprocessTransactionsWithPostTransactionChecks(transactionDate)
+                    : loan.reprocessTransactions();
             if (changedTransactionDetail != null) {
                 for (final Map.Entry<Long, LoanTransaction> mapEntry : changedTransactionDetail.getNewTransactionMappings().entrySet()) {
                     loanAccountDomainService.saveLoanTransactionWithDataIntegrityViolationChecks(mapEntry.getValue());
@@ -284,7 +293,6 @@ public class LoanChargeWritePlatformServiceImpl implements LoanChargeWritePlatfo
                 replayedTransactionBusinessEventService.raiseTransactionReplayedEvents(changedTransactionDetail);
             }
             loan = loanAccountDomainService.saveAndFlushLoanWithDataIntegrityViolationChecks(loan);
-
         }
 
         postJournalEntries(loan, existingTransactionIds, existingReversedTransactionIds);
@@ -757,9 +765,17 @@ public class LoanChargeWritePlatformServiceImpl implements LoanChargeWritePlatfo
     @Transactional
     @Override
     public void applyOverdueChargesForLoan(final Long loanId, Collection<OverdueLoanScheduleData> overdueLoanScheduleDataList) {
+        if (overdueLoanScheduleDataList.isEmpty()) {
+            return;
+        }
         Loan loan = this.loanAssembler.assembleFrom(loanId);
         if (loan.isChargedOff()) {
             log.warn("Adding charge to Loan: {} is not allowed. Loan Account is Charged-off", loanId);
+            return;
+        }
+        Optional<Charge> optPenaltyCharge = loan.getLoanProduct().getCharges().stream()
+                .filter((e) -> ChargeTimeType.OVERDUE_INSTALLMENT.getValue().equals(e.getChargeTimeType()) && e.isLoanCharge()).findFirst();
+        if (optPenaltyCharge.isEmpty()) {
             return;
         }
         final List<Long> existingTransactionIds = loan.findExistingTransactionIds();
@@ -1006,7 +1022,6 @@ public class LoanChargeWritePlatformServiceImpl implements LoanChargeWritePlatfo
     }
 
     private boolean addCharge(final Loan loan, final Charge chargeDefinition, LoanCharge loanCharge) {
-
         if (!loan.hasCurrencyCodeOf(chargeDefinition.getCurrencyCode())) {
             final String errorMessage = "Charge and Loan must have the same currency.";
             throw new InvalidCurrencyException("loanCharge", "attach.to.loan", errorMessage);
@@ -1021,24 +1036,7 @@ public class LoanChargeWritePlatformServiceImpl implements LoanChargeWritePlatfo
             }
         }
 
-        if (!loan.isInterestBearing() && loanCharge.isSpecifiedDueDate()) {
-            LoanRepaymentScheduleInstallment latestRepaymentScheduleInstalment = loan.getRepaymentScheduleInstallments()
-                    .get(loan.getLoanRepaymentScheduleInstallmentsSize() - 1);
-            if (DateUtils.isAfter(loanCharge.getDueDate(), latestRepaymentScheduleInstalment.getDueDate())) {
-                if (latestRepaymentScheduleInstalment.isAdditional()) {
-                    latestRepaymentScheduleInstalment.updateDueDate(loanCharge.getDueDate());
-                } else {
-                    final LoanRepaymentScheduleInstallment installment = new LoanRepaymentScheduleInstallment(loan,
-                            (loan.getLoanRepaymentScheduleInstallmentsSize() + 1), latestRepaymentScheduleInstalment.getDueDate(),
-                            loanCharge.getDueDate(), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, false, null);
-                    installment.markAsAdditional();
-                    loan.addLoanRepaymentScheduleInstallment(installment);
-                }
-            }
-        }
-
         loan.addLoanCharge(loanCharge);
-
         loanCharge = this.loanChargeRepository.saveAndFlush(loanCharge);
 
         // we want to apply charge transactions only for those loans charges that are applied when a loan is active and
