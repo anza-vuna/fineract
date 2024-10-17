@@ -27,7 +27,7 @@ metadata:
 #    cloud.google.com/neg: '{"ingress": true}'
 spec:
   ports:
-    - name: 8443-8080
+    - name: 443-8080
       protocol: TCP
       port: {{ .Values.fineract.env.CONTAINER_PORT }}
       targetPort: {{ .Values.fineract.env.FINERACT_SERVER_PORT }}
