@@ -37,6 +37,7 @@ import org.apache.fineract.portfolio.loanaccount.data.LoanAccountData;
 import org.apache.fineract.portfolio.loanaccount.data.LoanChargeData;
 import org.apache.fineract.portfolio.loanaccount.data.LoanSummaryData;
 import org.apache.fineract.portfolio.loanaccount.domain.LoanSummaryBalancesRepository;
+import org.apache.fineract.portfolio.loanaccount.domain.LoanTermVariations;
 import org.apache.fineract.portfolio.loanaccount.service.LoanChargeReadPlatformService;
 import org.apache.fineract.portfolio.loanaccount.service.LoanReadPlatformService;
 import org.springframework.stereotype.Component;
@@ -83,6 +84,12 @@ public class LoanBusinessEventSerializer implements BusinessEventSerializer {
 
         List<LoanInstallmentDelinquencyBucketDataV1> installmentsDelinquencyData = installmentLevelDelinquencyEventProducer
                 .calculateInstallmentLevelDelinquencyData(event.get(), data.getCurrency());
+
+        List<LoanTermVariations> activeLoanTermVariations = event.get().getActiveLoanTermVariations();
+
+        if (!activeLoanTermVariations.isEmpty()) {
+            data.setLoanTermVariations(activeLoanTermVariations.stream().map(LoanTermVariations::toData).toList());
+        }
 
         LoanAccountDataV1 result = mapper.map(data);
         result.getDelinquent().setInstallmentDelinquencyBuckets(installmentsDelinquencyData);
