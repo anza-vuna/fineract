@@ -221,10 +221,10 @@ spec:
               name: fineract-svc
               port:
                 number: {{ .Values.fineract.env.CONTAINER_PORT }}
-  tls:
-    - hosts:
-      - api.vuna.io
-      secretName: finercat-dev-tls-secret
+#  tls:
+#    - hosts:
+#      - api.vuna.io
+#      secretName: finercat-dev-tls-secret
 {{- end }}
 ---
 apiVersion: v1
@@ -235,23 +235,23 @@ type: Opaque
 data:
   username: "cm9vdA=="
   password: "RjFuMzdAY3RWdW40JA=="
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: mysql-preload-data-config
-  labels:
-    name: mysql-data-store
-    app: mysql-gke-deployment
-  #namespace: development
-data:
-  init.sql: |
-    CREATE DATABASE IF NOT EXISTS `fineract_tenants`;
-    CREATE DATABASE IF NOT EXISTS `fineract_default`;
-    GRANT ALL ON *.* TO 'root'@'%';
-    GRANT ALL PRIVILEGES ON `fineract_tenants`.* TO 'mifos';
-    GRANT ALL PRIVILEGES ON `fineract_default`.* TO 'mifos';
----
+#---
+#apiVersion: v1
+#kind: ConfigMap
+#metadata:
+#  name: mysql-preload-data-config
+#  labels:
+#    name: mysql-data-store
+#    app: mysql-gke-deployment
+#  #namespace: development
+#data:
+#  init.sql: |
+#    CREATE DATABASE IF NOT EXISTS `fineract_tenants`;
+#    CREATE DATABASE IF NOT EXISTS `fineract_default`;
+#    GRANT ALL ON *.* TO 'root'@'%';
+#    GRANT ALL PRIVILEGES ON `fineract_tenants`.* TO 'mifos';
+#    GRANT ALL PRIVILEGES ON `fineract_default`.* TO 'mifos';
+#---
 #apiVersion: networking.gke.io/v1
 #kind: ManagedCertificate
 #metadata:
