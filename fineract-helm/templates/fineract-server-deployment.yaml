@@ -213,7 +213,7 @@ spec:
             service:
               name: gateway
               port:
-                number: 8080
+                number: 8089
         - path: "{{ .Values.fineract.ingress.path }}"
           pathType: Prefix
           backend:
