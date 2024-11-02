@@ -207,13 +207,13 @@ spec:
   - host: "{{ .Values.fineract.ingress.hostname }}"
     http:
       paths:
-        - path: /landlord
-          pathType: Prefix
-          backend:
-            service:
-              name: gateway
-              port:
-                number: 80
+#        - path: /landlord
+#          pathType: Prefix
+#          backend:
+#            service:
+#              name: gateway
+#              port:
+#                number: 80
         - path: "{{ .Values.fineract.ingress.path }}"
           pathType: Prefix
           backend:
