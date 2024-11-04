@@ -73,6 +73,7 @@ buildscript {
     }
     repositories {
         maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url 'https://mifos.jfrog.io/artifactory/libs-snapshot-local/'}
     }
 
     dependencies {
@@ -109,6 +110,7 @@ plugins {
     id 'se.thinkcode.cucumber-runner' version '0.0.11' apply false
     id "com.github.davidmc24.gradle.plugin.avro-base" version "1.9.1" apply false
     id 'org.openapi.generator' version '7.8.0' apply false
+    //id 'community.mifos.pentaho-plugin' version '1.10.0-SNAPSHOT' apply false
 }
 
 apply from: "${rootDir}/buildSrc/src/main/groovy/org.apache.fineract.release.gradle"
