@@ -17,11 +17,6 @@
  * under the License.
  */
 
-repositories {
- maven { url 'https://plugins.gradle.org/m2/' }
- maven { url 'https://mifos.jfrog.io/artifactory/mifos/'}
-}
-
 dependencies {
     modules {
         module("io.swagger.core.v3:swagger-annotations") {

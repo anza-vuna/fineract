@@ -73,7 +73,6 @@ buildscript {
     }
     repositories {
         maven { url 'https://plugins.gradle.org/m2/' }
-        maven { url 'https://mifos.jfrog.io/artifactory/mifos/'}
     }
 
     dependencies {
@@ -779,6 +778,8 @@ configure(project.fineractPublishProjects) {
                     password "${findProperty('fineract.config.password')}"
                 }
             }
+            
+            maven { url 'https://mifos.jfrog.io/artifactory/mifos/'}
         }
     }
 
