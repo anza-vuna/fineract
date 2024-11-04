@@ -596,10 +596,6 @@ configure(project.fineractJavaProjects) {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
         
-        implementation 'org.pentaho.reporting.engine:classic-core:9.4.0.0'
-        
-        classpath 'community.mifos:pentaho-plugin:1.10.0-SNAPSHOT'
-        
         testImplementation( 'org.mockito:mockito-core',
                 'org.mockito:mockito-junit-jupiter',
                 'org.junit.jupiter:junit-jupiter-api',

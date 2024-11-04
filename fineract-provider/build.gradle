@@ -43,6 +43,7 @@ compileJava.doLast {
         main 'org.eclipse.persistence.tools.weaving.jpa.StaticWeave'
         args '-persistenceinfo', source, source, target
         classpath sourceSets.main.runtimeClasspath
+        classpath 'community.mifos:pentaho-plugin:1.10.0-SNAPSHOT'
     }
     delete {
         delete "${source}/META-INF/persistence.xml"
