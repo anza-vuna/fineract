@@ -85,8 +85,6 @@ buildscript {
         classpath 'io.swagger.core.v3:swagger-jaxrs2-jakarta:2.2.22'
         classpath 'jakarta.servlet:jakarta.servlet-api:6.1.0'
         classpath 'community.mifos:pentaho-plugin:1.10.0-SNAPSHOT'
-        
-        implementation 'org.pentaho.reporting.engine:classic-core:9.4.0.0'
     }
 }
 
@@ -113,7 +111,7 @@ plugins {
     id 'se.thinkcode.cucumber-runner' version '0.0.11' apply false
     id "com.github.davidmc24.gradle.plugin.avro-base" version "1.9.1" apply false
     id 'org.openapi.generator' version '7.8.0' apply false
-    //id 'community.mifos.pentaho-plugin' version '1.10.0-SNAPSHOT' apply false
+    id 'org.pentaho.reporting.engine:classic-core' version '9.4.0.0' apply false
 }
 
 apply from: "${rootDir}/buildSrc/src/main/groovy/org.apache.fineract.release.gradle"
