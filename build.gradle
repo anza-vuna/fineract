@@ -73,7 +73,7 @@ buildscript {
     }
     repositories {
         maven { url 'https://plugins.gradle.org/m2/' }
-        maven2 { url 'https://mifos.jfrog.io/artifactory/libs-snapshot/'}
+        maven { url 'https://mifos.jfrog.io/artifactory/mifos/'}
     }
 
     dependencies {
@@ -84,7 +84,8 @@ buildscript {
         classpath 'org.apache.commons:commons-lang3:3.17.0'
         classpath 'io.swagger.core.v3:swagger-jaxrs2-jakarta:2.2.22'
         classpath 'jakarta.servlet:jakarta.servlet-api:6.1.0'
-        classpath 'community.mifos:pentaho-plugin:1.8.4-SNAPSHOT'
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4+"
+        //classpath 'community.mifos:pentaho-plugin:1.8.4-SNAPSHOT'
     }
 }
 
