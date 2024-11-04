@@ -85,7 +85,7 @@ buildscript {
         classpath 'io.swagger.core.v3:swagger-jaxrs2-jakarta:2.2.22'
         classpath 'jakarta.servlet:jakarta.servlet-api:6.1.0'
         classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4+"
-        classpath 'community.mifos:pentaho-plugin:1.8.4-SNAPSHOT'
+        //classpath 'community.mifos:pentaho-plugin:1.8.4-SNAPSHOT'
     }
 }
 
