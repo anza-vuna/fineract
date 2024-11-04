@@ -84,7 +84,6 @@ buildscript {
         classpath 'org.apache.commons:commons-lang3:3.17.0'
         classpath 'io.swagger.core.v3:swagger-jaxrs2-jakarta:2.2.22'
         classpath 'jakarta.servlet:jakarta.servlet-api:6.1.0'
-        classpath 'community.mifos:pentaho-plugin:1.10.0-SNAPSHOT'
     }
 }
 
@@ -596,8 +595,10 @@ configure(project.fineractJavaProjects) {
 
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
-
+        
         implementation 'org.pentaho.reporting.engine:classic-core:9.4.0.0'
+        
+        classpath 'community.mifos:pentaho-plugin:1.10.0-SNAPSHOT'
         
         testImplementation( 'org.mockito:mockito-core',
                 'org.mockito:mockito-junit-jupiter',
