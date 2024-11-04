@@ -200,7 +200,7 @@ dependencies {
 
     implementation 'io.github.classgraph:classgraph'
 
-	implementation 'community.mifos:pentaho-plugin:1.10.0-SNAPSHOT'
+	//implementation 'community.mifos:pentaho-plugin'
 	
     // testCompile dependencies are ONLY used in src/test, not src/main.
     // Do NOT repeat dependencies which are ALREADY in implementation or runtimeOnly!
