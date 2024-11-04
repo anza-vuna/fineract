@@ -73,7 +73,7 @@ buildscript {
     }
     repositories {
         maven { url 'https://plugins.gradle.org/m2/' }
-        maven { url 'https://mifos.jfrog.io/artifactory/mifos/libs-snapshot-local'}
+        maven { url 'https://mifos.jfrog.io/artifactory/libs-snapshot-local'}
     }
 
     dependencies {
