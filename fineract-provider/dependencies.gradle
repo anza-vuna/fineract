@@ -201,6 +201,7 @@ dependencies {
     implementation 'io.github.classgraph:classgraph'
 
 	//implementation 'community.mifos:pentaho-plugin:1.10.0-20240418.073704-1'
+	implementation files('../fineract-pentaho/pentahoReports/pentaho-plugin-1.10.0-SNAPSHOT.jar')
 	
     // testCompile dependencies are ONLY used in src/test, not src/main.
     // Do NOT repeat dependencies which are ALREADY in implementation or runtimeOnly!
