@@ -85,6 +85,8 @@ buildscript {
         classpath 'io.swagger.core.v3:swagger-jaxrs2-jakarta:2.2.22'
         classpath 'jakarta.servlet:jakarta.servlet-api:6.1.0'
         classpath 'community.mifos:pentaho-plugin:1.10.0-SNAPSHOT'
+        
+        implementation 'org.pentaho.reporting.engine:classic-core:9.4.0.0'
     }
 }
 
