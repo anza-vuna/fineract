@@ -63,7 +63,8 @@ jobs:
           GITHUB_SHA: ${{ github.sha }}
           GITHUB_REF: ${{ github.ref }}
           DOCKER_URL: ${{ secrets.DOCKER_URL }}
-          DOSN: ${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}
+#          DOSN: ${{ secrets.DOCKER_OBJECT_STORAGE_NAMESPACE }}
+          REPO: ${{ github.event.repository.name }}
           IMAGE: ${{ env.IMAGE }}
 
 #        # Push the Docker image to OCI Container Registry
