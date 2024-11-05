@@ -75,8 +75,8 @@ jobs:
       - name: 'Publish to GitHub Container Registry'
         run: |-
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          docker push "ghcr.io/${{ github.repository }}/$IMAGE:$GITHUB_SHA"
-          docker push "ghcr.io/${{ github.repository }}/$IMAGE:latest"
+          docker push "ghcr.io/${{ github.event.repository.name }}/$IMAGE:$GITHUB_SHA"
+          docker push "ghcr.io/${{ github.event.repository.name }}/$IMAGE:latest"
 
         # Deploy the Docker image to the GKE cluster
       - name: 'Deploy to K8S'
@@ -95,7 +95,7 @@ jobs:
           helm upgrade cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.12.0 --set installCRDs=true
           
           helm upgrade \
-          --set fineract.image="ghcr.io/${{ github.repository }}/$IMAGE:latest" \
+          --set fineract.image="ghcr.io/${{ github.event.repository.name }}/$IMAGE:latest" \
           --set fineract.env.FINERACT_SERVER_PORT=${{ secrets.FINERACT_SERVER_PORT }} \
           --set fineract.env.FINERACT_NODE_ID="${{ secrets.FINERACT_NODE_ID }}" \
           --set fineract.env.FINERACT_HIKARI_DRIVER_SOURCE_CLASS_NAME="${{ secrets.FINERACT_HIKARI_DRIVER_SOURCE_CLASS_NAME }}" \
