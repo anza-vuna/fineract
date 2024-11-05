@@ -94,6 +94,7 @@ import org.apache.fineract.integrationtests.common.loans.LoanProductHelper;
 import org.apache.fineract.integrationtests.common.loans.LoanProductTestBuilder;
 import org.apache.fineract.integrationtests.common.loans.LoanTestLifecycleExtension;
 import org.apache.fineract.integrationtests.common.loans.LoanTransactionHelper;
+import org.apache.fineract.integrationtests.common.products.DelinquencyBucketsHelper;
 import org.apache.fineract.integrationtests.common.system.CodeHelper;
 import org.apache.fineract.integrationtests.inlinecob.InlineLoanCOBHelper;
 import org.apache.fineract.integrationtests.useradministration.users.UserHelper;
@@ -250,6 +251,9 @@ public abstract class BaseLoanIntegrationTest {
     }
 
     protected PostLoanProductsRequest create4IProgressive() {
+        final Integer delinquencyBucketId = DelinquencyBucketsHelper.createDelinquencyBucket(requestSpec, responseSpec);
+        Assertions.assertNotNull(delinquencyBucketId);
+
         return new PostLoanProductsRequest().name(Utils.uniqueRandomStringGenerator("4I_PROGRESSIVE_", 6))//
                 .shortName(Utils.uniqueRandomStringGenerator("", 4))//
                 .description("4 installment product - progressive")//
@@ -291,7 +295,6 @@ public abstract class BaseLoanIntegrationTest {
                 .allowCompoundingOnEod(false)//
                 .canDefineInstallmentAmount(true)//
                 .repaymentStartDateType(1)//
-                .supportedInterestRefundTypes(List.of())//
                 .charges(List.of())//
                 .principalVariationsForBorrowerCycle(List.of())//
                 .interestRateVariationsForBorrowerCycle(List.of())//
@@ -342,7 +345,7 @@ public abstract class BaseLoanIntegrationTest {
                         .graceOnPrincipalAndInterestPayment(true)//
                         .graceOnArrearsAgeing(true)//
                 ).isEqualAmortization(false)//
-                .delinquencyBucketId(1L)//
+                .delinquencyBucketId(delinquencyBucketId.longValue())//
                 .enableDownPayment(false)//
                 .enableInstallmentLevelDelinquency(false)//
                 .loanScheduleType("PROGRESSIVE")//
@@ -650,7 +653,8 @@ public abstract class BaseLoanIntegrationTest {
     // not all journal entries have been validated - since there might be duplicates
     protected void verifyJournalEntries(Long loanId, Journal... entries) {
         GetJournalEntriesTransactionIdResponse journalEntriesForLoan = journalEntryHelper.getJournalEntriesForLoan(loanId);
-        Assertions.assertEquals(entries.length, journalEntriesForLoan.getPageItems().size());
+        Assertions.assertEquals(entries.length, journalEntriesForLoan.getPageItems().size(),
+                "Actual is: " + lineSeparator() + journalEntriesForLoan.getPageItems().toString());
         Arrays.stream(entries).forEach(journalEntry -> {
             boolean found = journalEntriesForLoan.getPageItems().stream()
                     .anyMatch(item -> Objects.equals(item.getAmount(), journalEntry.amount)
@@ -1280,8 +1284,21 @@ public abstract class BaseLoanIntegrationTest {
         public static final Integer DAYS_365 = 365;
     }
 
+    public static class DaysInMonthType {
+
+        public static final Integer INVALID = 0;
+        public static final Integer ACTUAL = 1;
+        public static final Integer DAYS_30 = 30;
+    }
+
     public static class FuturePaymentAllocationRule {
 
         public static final String LAST_INSTALLMENT = "LAST_INSTALLMENT";
+    }
+
+    public static class SupportedInterestRefundTypesItem {
+
+        public static final String MERCHANT_ISSUED_REFUND = "MERCHANT_ISSUED_REFUND";
+        public static final String PAYOUT_REFUND = "PAYOUT_REFUND";
     }
 }
