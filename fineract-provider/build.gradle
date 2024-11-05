@@ -267,7 +267,7 @@ jib {
     to {
         //image = 'almbolonzi/ekesha-fineract'
 //	image = "${System.getenv('GAR_LOCATION')}-docker.pkg.dev/${System.getenv('PROJECT_ID')}/${System.getenv('REPOSITORY')}/${System.getenv('IMAGE')}".toString()
-        image = "${System.getenv('DOCKER_URL')}/${System.getenv('DOSN')}/${System.getenv('IMAGE')}".toString()
+        image = "ghcr.io/${System.getenv('DOSN')}/${System.getenv('IMAGE')}".toString()
         tags = [
             "${project.version}",
             "${versionTag}",
