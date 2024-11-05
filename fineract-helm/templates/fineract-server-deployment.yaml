@@ -136,7 +136,7 @@ spec:
               exec:
                 command: ['sh', '-c', '{{ .Values.fineract.preStopScript}}']
       imagePullSecrets:
-        - name: ocirsecret
+        - name: ghcr-secret
 
 #      - name: cloud-sql-proxy
 #        # It is recommended to use the latest version of the Cloud SQL Auth Proxy
