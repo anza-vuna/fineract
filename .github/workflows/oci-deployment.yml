@@ -12,6 +12,9 @@ jobs:
     name: 'Setup, Build, Publish, and Deploy'
     runs-on: ubuntu-latest
     environment: dev
+    permissions:
+      packages: write
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
