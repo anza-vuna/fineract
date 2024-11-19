@@ -204,7 +204,7 @@ public class AuditReadPlatformServiceImpl implements AuditReadPlatformService {
 
     @Override
     public Collection<AuditData> retrieveAllEntriesToBeChecked(final SQLBuilder extraCriteria, final boolean includeJson) {
-        extraCriteria.addCriteria("aud.status = ", 2);
+        extraCriteria.addCriteria("aud.status = ", 1);
         return retrieveEntries("makerchecker", extraCriteria, " order by aud.id, mk.username", includeJson);
     }
 
