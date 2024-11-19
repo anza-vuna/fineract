@@ -16,20 +16,19 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.fineract.portfolio.loanaccount.service;
+package org.apache.fineract.test.testrail;
 
-import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.apache.fineract.portfolio.loanaccount.domain.Loan;
-import org.springframework.stereotype.Service;
+import org.apache.fineract.test.support.PropertiesCondition;
 
-@Service
-@RequiredArgsConstructor
-public class InterestRefundServiceDelegate {
+public class TestRailEnabledCondition extends PropertiesCondition<TestRailProperties> {
 
-    private final List<InterestRefundService> interestRefundService;
+    @Override
+    protected Class<TestRailProperties> getPropertiesClass() {
+        return TestRailProperties.class;
+    }
 
-    public InterestRefundService lookupInterestRefundService(final Loan loan) {
-        return interestRefundService.stream().filter(iRS -> iRS.canHandle(loan)).findFirst().orElse(null);
+    @Override
+    protected boolean matches(TestRailProperties properties) {
+        return properties.isEnabled();
     }
 }

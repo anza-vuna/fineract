@@ -16,16 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.fineract.portfolio.loanaccount.loanschedule.data;
+package org.apache.fineract.test.messaging.event.loan;
 
-import lombok.Data;
-import org.apache.fineract.organisation.monetary.domain.Money;
+public class LoanRejectedEvent extends AbstractLoanEvent {
 
-@Data
-public class PayableDetails {
-
-    private final Money emi;
-    private final Money payablePrincipal;
-    private final Money payableInterest;
-    private final Money outstandingBalance;
+    @Override
+    public String getEventName() {
+        return "LoanRejectedBusinessEvent";
+    }
 }
