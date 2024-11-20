@@ -117,9 +117,9 @@ public class AuditReadPlatformServiceImpl implements AuditReadPlatformService {
 
             // data scoping: head office (hierarchy = ".") can see all audit
             // entries
-            if (!hierarchy.equals(".")) {
-                partSql += " join m_office o2 on o2.id = aud.office_id and o2.hierarchy like '" + hierarchy + "%' ";
-            }
+//            if (!hierarchy.equals(".")) {
+//                partSql += " join m_office o2 on o2.id = aud.office_id and o2.hierarchy like '" + hierarchy + "%' ";
+//            }
 
             return partSql;
         }
