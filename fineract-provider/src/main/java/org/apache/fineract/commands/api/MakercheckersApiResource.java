@@ -176,7 +176,7 @@ public class MakercheckersApiResource {
         extraCriteria.addNonNullCriteria("aud.maker_id = ", makerId);
         extraCriteria.addNonNullCriteria("aud.made_on_date >= ", makerDateTimeFrom);
         extraCriteria.addNonNullCriteria("aud.made_on_date <= ", makerDateTimeTo);
-        extraCriteria.addNonNullCriteria("o.id = ", officeId);
+        extraCriteria.addNonNullCriteria("aud.id = ", officeId);
         extraCriteria.addNonNullCriteria("aud.group_id = ", groupId);
         extraCriteria.addNonNullCriteria("aud.client_id = ", clientId);
         extraCriteria.addNonNullCriteria("aud.loan_id = ", loanId);

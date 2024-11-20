@@ -110,16 +110,19 @@ public class AuditReadPlatformServiceImpl implements AuditReadPlatformService {
                     + " o.name as officeName, gl.level_name as groupLevelName, g.display_name as groupName, c.display_name as clientName, "
                     + " l.account_no as loanAccountNo, s.account_no as savingsAccountNo " + " from m_portfolio_command_source aud "
                     + " left join m_appuser mk on mk.id = aud.maker_id" + " left join m_appuser ck on ck.id = aud.checker_id"
-                    + " left join m_office o on o.id = aud.office_id" + " left join m_group g on g.id = aud.group_id"
+//                    + " left join m_office o on o.id = aud.office_id"
+                    + " left join m_group g on g.id = aud.group_id"
                     + " left join m_group_level gl on gl.id = g.level_id" + " left join m_client c on c.id = aud.client_id"
                     + " left join m_loan l on l.id = aud.loan_id" + " left join m_savings_account s on s.id = aud.savings_account_id"
                     + " left join r_enum_value ev on ev.enum_name = 'status' and ev.enum_id = aud.status";
 
             // data scoping: head office (hierarchy = ".") can see all audit
             // entries
-//            if (!hierarchy.equals(".")) {
-//                partSql += " join m_office o2 on o2.id = aud.office_id and o2.hierarchy like '" + hierarchy + "%' ";
-//            }
+            if (!hierarchy.equals(".")) {
+                partSql += " join m_office o on o.id = aud.office_id and o.hierarchy like '" + hierarchy + "%' ";
+            }else{
+                partSql += " left join m_office o on o.id = aud.office_id";
+            }
 
             return partSql;
         }
